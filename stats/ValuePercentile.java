@@ -87,12 +87,14 @@ public class ValuePercentile extends AbstractOperation {
      *         Value to record
      */
     public void record(final long p_value) {
-        long[] arr = m_slots.get(m_slots.size() - 1);
+        long[] arr;
 
-        if (m_index == SLOT_SIZE) {
+        if (m_index % SLOT_SIZE == 0) {
             arr = new long[SLOT_SIZE];
             m_slots.add(arr);
             m_index = 0;
+        } else {
+            arr = m_slots.get(m_slots.size() - 1);
         }
 
         arr[m_index++] = p_value;
