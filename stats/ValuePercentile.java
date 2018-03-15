@@ -47,6 +47,14 @@ public class ValuePercentile extends AbstractOperation {
     }
 
     /**
+     * Delete all registered values.
+     */
+    public void deleteValues() {
+        m_slots = new ArrayList<>();
+        m_index = 0;
+    }
+
+    /**
      * Sort all registered values (ascending). Call this before getting any percentile values
      * to update the internal state.
      */
