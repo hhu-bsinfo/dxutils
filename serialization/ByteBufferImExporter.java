@@ -17,6 +17,7 @@
 package de.hhu.bsinfo.dxutils.serialization;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Implementation of an Importer/Exporter for ByteBuffers.
@@ -84,7 +85,7 @@ public class ByteBufferImExporter implements Importer, Exporter {
 
     @Override
     public void writeString(final String p_str) {
-        writeByteArray(p_str.getBytes());
+        writeByteArray(p_str.getBytes(StandardCharsets.US_ASCII));
     }
 
     @Override

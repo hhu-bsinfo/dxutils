@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Importer/Exporter for a RandomAccessFile
@@ -140,7 +141,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
 
     @Override
     public void writeString(final String p_str) {
-        writeByteArray(p_str.getBytes());
+        writeByteArray(p_str.getBytes(StandardCharsets.US_ASCII));
     }
 
     @Override
