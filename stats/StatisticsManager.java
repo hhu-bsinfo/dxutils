@@ -227,6 +227,10 @@ public final class StatisticsManager extends Thread {
         printStatisticTablesOf(builder, Ratio.class);
         builder.append('\n');
 
+        builder.append(">>> TimePercentile\n");
+        printStatisticTablesOf(builder, TimePercentile.class);
+        builder.append('\n');
+
         m_opsLock.unlock();
 
         builder.append("============================================================================================" +

@@ -42,6 +42,8 @@ public class ValuePercentile extends AbstractOperation {
         super(p_class, p_name);
 
         m_index = 0;
+
+        m_slots.add(new long[SLOT_SIZE]);
     }
 
     /**

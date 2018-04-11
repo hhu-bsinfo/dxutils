@@ -24,6 +24,7 @@ package de.hhu.bsinfo.dxutils.stats;
  */
 public class TimePercentile extends Time {
     private ValuePercentile m_percentile;
+    private Value m_value;
 
     /**
      * Constructor
@@ -37,6 +38,7 @@ public class TimePercentile extends Time {
         super(p_class, p_name);
 
         m_percentile = new ValuePercentile(p_class, p_name);
+        m_value = new Value(p_class, p_name);
     }
 
     /**
@@ -79,6 +81,7 @@ public class TimePercentile extends Time {
      */
     public void record(final long p_valueNs) {
         m_percentile.record(p_valueNs);
+        m_value.add(p_valueNs);
     }
 
     @Override
@@ -95,7 +98,7 @@ public class TimePercentile extends Time {
         if (p_extended) {
             sortValues();
 
-            return super.dataToString(p_indent, p_extended) + ";95th percentile " +
+            return m_value.dataToString(p_indent, p_extended) + ";95th percentile " +
                     formatTime(getPercentileScore(0.95f)) + ";99th percentile " +
                     formatTime(getPercentileScore(0.99f)) + ";99.9th percentile " +
                     formatTime(getPercentileScore(0.999f));
@@ -107,14 +110,14 @@ public class TimePercentile extends Time {
 
     @Override
     public String generateCSVHeader(final char p_delim) {
-        return super.generateCSVHeader(p_delim) + p_delim + "95th percentile" + p_delim + "99th percentile" + p_delim +
-                "99.9th percentile";
+        return m_value.generateCSVHeader(p_delim) + p_delim + "95th percentile" + p_delim + "99th percentile" +
+                p_delim + "99.9th percentile";
     }
 
     @Override
     public String toCSV(final char p_delim) {
         sortValues();
-        return super.toCSV(p_delim) + p_delim + getPercentileScore(0.95f) + p_delim + getPercentileScore(0.99f) +
+        return m_value.toCSV(p_delim) + p_delim + getPercentileScore(0.95f) + p_delim + getPercentileScore(0.99f) +
                 p_delim + getPercentileScore(0.999f);
     }
 }
