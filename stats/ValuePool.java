@@ -16,6 +16,7 @@
 
 package de.hhu.bsinfo.dxutils.stats;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -28,9 +29,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ValuePool extends AbstractOperation {
     private static final int MS_BLOCK_SIZE_POOL = 100;
 
-    private Value[][] m_pool = new Value[100][0];
+    private ArrayList<Value[]> m_pool = new ArrayList<>();
     private Lock m_poolLock = new ReentrantLock(false);
-    private int m_poolBlockPos;
     private AtomicInteger m_numberEntries = new AtomicInteger(0);
 
     /**
@@ -71,14 +71,14 @@ public class ValuePool extends AbstractOperation {
 
         int entries = m_numberEntries.get();
 
-        for (int i = 0; i < m_poolBlockPos; i++) {
-            for (int j = 0; j < m_pool[i].length; j++) {
-                if (m_pool[i][j] != null) {
+        for (int i = 0; i < m_pool.size(); i++) {
+            for (int j = 0; j < m_pool.get(i).length; j++) {
+                if (m_pool.get(i)[j] != null) {
                     builder.append(p_indent);
                     builder.append("id ");
                     builder.append((i + 1) * j);
                     builder.append(": ");
-                    builder.append(m_pool[i][j].dataToString("", p_extended));
+                    builder.append(m_pool.get(i)[j].dataToString("", p_extended));
 
                     if (--entries > 0) {
                         builder.append('\n');
@@ -101,10 +101,10 @@ public class ValuePool extends AbstractOperation {
 
         int entries = m_numberEntries.get();
 
-        for (int i = 0; i < m_poolBlockPos; i++) {
-            for (int j = 0; j < m_pool[i].length; j++) {
-                if (m_pool[i][j] != null) {
-                    builder.append(m_pool[i][j].toCSV(p_delim));
+        for (int i = 0; i < m_pool.size(); i++) {
+            for (int j = 0; j < m_pool.get(i).length; j++) {
+                if (m_pool.get(i)[j] != null) {
+                    builder.append(m_pool.get(i)[j].toCSV(p_delim));
 
                     if (--entries > 0) {
                         builder.append('\n');
@@ -122,22 +122,22 @@ public class ValuePool extends AbstractOperation {
     private Value getThreadLocalValue() {
         long threadId = Thread.currentThread().getId();
 
-        if (threadId >= m_poolBlockPos * MS_BLOCK_SIZE_POOL) {
+        if (threadId >= m_pool.size() * MS_BLOCK_SIZE_POOL) {
             m_poolLock.lock();
 
-            while (threadId >= m_poolBlockPos * MS_BLOCK_SIZE_POOL) {
-                m_pool[m_poolBlockPos++] = new Value[MS_BLOCK_SIZE_POOL];
+            while (threadId >= m_pool.size() * MS_BLOCK_SIZE_POOL) {
+                m_pool.add(new Value[MS_BLOCK_SIZE_POOL]);
             }
 
             m_poolLock.unlock();
         }
 
-        Value value = m_pool[(int) (threadId / MS_BLOCK_SIZE_POOL)][(int) (threadId % MS_BLOCK_SIZE_POOL)];
+        Value value = m_pool.get((int) (threadId / MS_BLOCK_SIZE_POOL))[(int) (threadId % MS_BLOCK_SIZE_POOL)];
 
         if (value == null) {
             value = new Value(m_class, m_name + '-' + Thread.currentThread().getId() + '-' +
                     Thread.currentThread().getName());
-            m_pool[(int) (threadId / MS_BLOCK_SIZE_POOL)][(int) (threadId % MS_BLOCK_SIZE_POOL)] = value;
+            m_pool.get((int) (threadId / MS_BLOCK_SIZE_POOL))[(int) (threadId % MS_BLOCK_SIZE_POOL)] = value;
             m_numberEntries.incrementAndGet();
         }
 
