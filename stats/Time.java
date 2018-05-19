@@ -212,7 +212,7 @@ public class Time extends AbstractOperation {
      *         Time in ns to format
      * @return String with auto formated time
      */
-    String formatTime(final double p_timeNs) {
+    static String formatTime(final double p_timeNs) {
         for (int i = Prefix.MICRO.ordinal(); i <= Prefix.SEC.ordinal(); i++) {
             if (p_timeNs < MS_PREFIX_TABLE[i]) {
                 return String.format("%.3f %s", p_timeNs / MS_PREFIX_TABLE[i - 1], MS_PREFIX_NAMES[i - 1]);
