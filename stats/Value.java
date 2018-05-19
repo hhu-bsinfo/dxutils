@@ -26,7 +26,7 @@ public class Value extends AbstractOperation {
         B_2, B_10,
     }
 
-    enum Prefix {
+    public enum Prefix {
         NONE, KILO, MEGA, GIGA, TERA, PETA, EXA, MAX, COUNT
     }
 
@@ -242,7 +242,7 @@ public class Value extends AbstractOperation {
 
     @Override
     public String toCSV(final char p_delim) {
-        return getOperationName() + p_delim + m_counter + p_delim + m_total + p_delim + getAvgValue() + p_delim +
+        return getOperationName() + p_delim + m_counter + p_delim + m_total + p_delim + (long) getAvgValue() + p_delim +
                 m_min + p_delim + m_max;
     }
 
