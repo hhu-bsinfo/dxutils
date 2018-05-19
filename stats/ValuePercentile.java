@@ -42,8 +42,6 @@ public class ValuePercentile extends AbstractOperation {
         super(p_class, p_name);
 
         m_index = 0;
-
-        m_slots.add(new long[SLOT_SIZE]);
     }
 
     /**
@@ -59,7 +57,7 @@ public class ValuePercentile extends AbstractOperation {
      * to update the internal state.
      */
     public void sortValues() {
-        if (m_index == 0) {
+        if (m_slots.isEmpty()) {
             return;
         }
 
@@ -78,14 +76,14 @@ public class ValuePercentile extends AbstractOperation {
             throw new IllegalArgumentException("Percentile must be in (0.0, 1.0)!");
         }
 
-        if (m_index == 0) {
+        if (m_slots.isEmpty()) {
             return 0;
         }
 
         int size = (m_slots.size() - 1) * SLOT_SIZE + m_index;
-        int index = (int) Math.ceil(p_percentile * size) - 1;
+        long index = (long) Math.ceil(p_percentile * size) - 1;
 
-        return m_slots.get(index / SLOT_SIZE)[index % SLOT_SIZE];
+        return m_slots.get((int) (index / SLOT_SIZE))[(int) (index % SLOT_SIZE)];
     }
 
     /**
