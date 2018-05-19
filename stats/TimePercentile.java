@@ -22,7 +22,7 @@ package de.hhu.bsinfo.dxutils.stats;
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 08.03.2018
  */
-public class TimePercentile extends Time {
+public class TimePercentile extends AbstractOperation {
     private ValuePercentile m_percentile;
     private Value m_value;
 
@@ -39,6 +39,74 @@ public class TimePercentile extends Time {
 
         m_percentile = new ValuePercentile(p_class, p_name);
         m_value = new Value(p_class, p_name);
+    }
+
+    /**
+     * Get the counter
+     *
+     * @return Counter value
+     */
+    public long getCounter() {
+        return m_value.getCounter();
+    }
+
+    /**
+     * Get the average value
+     *
+     * @return Average value
+     */
+    public long getAvg() {
+        return (long) m_value.getAvgValue();
+    }
+
+    /**
+     * Get the average value
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     */
+    public double getAvg(final Time.Prefix p_prefix) {
+        return m_value.getAvgValue() / Time.MS_PREFIX_TABLE[p_prefix.ordinal()];
+    }
+
+    /**
+     * Get the min value
+     *
+     * @return Min value
+     */
+    public long getMin() {
+        return m_value.getMinValue();
+    }
+
+    /**
+     * Get the min value
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Min value scaled to specified prefix
+     */
+    public double getMin(final Time.Prefix p_prefix) {
+        return m_value.getMinValue() / Time.MS_PREFIX_TABLE[p_prefix.ordinal()];
+    }
+
+    /**
+     * Get the max value
+     *
+     * @return Max value
+     */
+    public long getMax() {
+        return m_value.getMaxValue();
+    }
+
+    /**
+     * Get the max value
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Max value scaled to specified prefix
+     */
+    public double getMax(final Time.Prefix p_prefix) {
+        return m_value.getMaxValue() / Time.MS_PREFIX_TABLE[p_prefix.ordinal()];
     }
 
     /**
@@ -69,8 +137,8 @@ public class TimePercentile extends Time {
      *         Prefix to apply to score
      * @return Score of specified percentile scaled to specified prefix
      */
-    public double getPercentileScore(final float p_percentile, final Prefix p_prefix) {
-        return getPercentileScore(p_percentile) / MS_PREFIX_TABLE[p_prefix.ordinal()];
+    public double getPercentileScore(final float p_percentile, final Time.Prefix p_prefix) {
+        return getPercentileScore(p_percentile) / Time.MS_PREFIX_TABLE[p_prefix.ordinal()];
     }
 
     /**
@@ -85,26 +153,17 @@ public class TimePercentile extends Time {
     }
 
     @Override
-    public long stop() {
-        long delta = super.stop();
-
-        record(delta);
-
-        return delta;
-    }
-
-    @Override
     public String dataToString(final String p_indent, final boolean p_extended) {
         if (p_extended) {
             sortValues();
 
             return m_value.dataToString(p_indent, p_extended) + ";95th percentile " +
-                    formatTime(getPercentileScore(0.95f)) + ";99th percentile " +
-                    formatTime(getPercentileScore(0.99f)) + ";99.9th percentile " +
-                    formatTime(getPercentileScore(0.999f));
+                    Time.formatTime(getPercentileScore(0.95f)) + ";99th percentile " +
+                    Time.formatTime(getPercentileScore(0.99f)) + ";99.9th percentile " +
+                    Time.formatTime(getPercentileScore(0.999f));
         } else {
             // don't print percentile for debug output because sorting might take too long if there are too many values
-            return super.dataToString(p_indent, p_extended);
+            return m_value.dataToString(p_indent, p_extended);
         }
     }
 
