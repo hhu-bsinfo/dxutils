@@ -25,10 +25,10 @@ import java.util.ArrayList;
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 08.03.2018
  */
 public class ValuePercentile extends AbstractOperation {
-    private static final int SLOT_SIZE = 100000;
+    static final int SLOT_SIZE = 100000;
 
-    private ArrayList<long[]> m_slots = new ArrayList<>();
-    private int m_index;
+    ArrayList<long[]> m_slots = new ArrayList<>();
+    int m_index;
 
     /**
      * Constructor
@@ -156,7 +156,10 @@ public class ValuePercentile extends AbstractOperation {
             }
 
             if (i <= j) {
-                exchangeNumbers(i, j);
+                long temp = m_slots.get(i / SLOT_SIZE)[i % SLOT_SIZE];
+                m_slots.get(i / SLOT_SIZE)[i % SLOT_SIZE] = m_slots.get(j / SLOT_SIZE)[j % SLOT_SIZE];
+                m_slots.get(j / SLOT_SIZE)[j % SLOT_SIZE] = temp;
+
                 i++;
                 j--;
             }
@@ -169,19 +172,5 @@ public class ValuePercentile extends AbstractOperation {
         if (i < p_higherIndex) {
             quickSort(i, p_higherIndex);
         }
-    }
-
-    /**
-     * Helper method for quicksort. Exchange two values.
-     *
-     * @param p_i
-     *         first index
-     * @param p_j
-     *         second index
-     */
-    private void exchangeNumbers(int p_i, int p_j) {
-        long temp = m_slots.get(p_i / SLOT_SIZE)[p_i % SLOT_SIZE];
-        m_slots.get(p_i / SLOT_SIZE)[p_i % SLOT_SIZE] = m_slots.get(p_j / SLOT_SIZE)[p_j % SLOT_SIZE];
-        m_slots.get(p_j / SLOT_SIZE)[p_j % SLOT_SIZE] = temp;
     }
 }
