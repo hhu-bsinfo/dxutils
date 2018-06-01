@@ -23,8 +23,8 @@ package de.hhu.bsinfo.dxutils.stats;
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 08.03.2018
  */
 public class TimePercentile extends AbstractOperation {
-    private ValuePercentile m_percentile;
-    private Value m_value;
+    ValuePercentile m_percentile;
+    Value m_value;
 
     /**
      * Constructor
@@ -48,6 +48,15 @@ public class TimePercentile extends AbstractOperation {
      */
     public long getCounter() {
         return m_value.getCounter();
+    }
+
+    /**
+     * Get the total value
+     *
+     * @return Total value
+     */
+    public long getTotalValue() {
+        return m_value.getTotalValue();
     }
 
     /**
