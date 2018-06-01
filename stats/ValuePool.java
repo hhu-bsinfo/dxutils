@@ -16,22 +16,12 @@
 
 package de.hhu.bsinfo.dxutils.stats;
 
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * (Thread safe) value operation using a pool with per thread local value operations
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 05.03.2018
  */
-public class ValuePool extends AbstractOperation {
-    private static final int MS_BLOCK_SIZE_POOL = 100;
-
-    private ArrayList<Value[]> m_pool = new ArrayList<>();
-    private Lock m_poolLock = new ReentrantLock(false);
-    private AtomicInteger m_numberEntries = new AtomicInteger(0);
+public class ValuePool extends OperationPool {
 
     /**
      * Constructor
@@ -43,14 +33,164 @@ public class ValuePool extends AbstractOperation {
      *         Name for the operation
      */
     public ValuePool(final Class<?> p_class, final String p_name) {
-        super(p_class, p_name);
+        super(Value.class, p_class, p_name);
+    }
+
+    /**
+     * Get the counter value of all threads summed up
+     *
+     * @return Counter value
+     */
+    public long getCounter() {
+        long val = 0;
+
+        for (AbstractOperation[] opArr : m_pool) {
+            for (AbstractOperation op : opArr) {
+                if (op != null) {
+                    val += ((Value) op).getCounter();
+                }
+            }
+        }
+
+        return val;
+    }
+
+    /**
+     * Get the counter value of all threads summed up
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Counter value scaled to specified prefix
+     */
+    public double getCounter(final Value.Prefix p_prefix) {
+        return getCounter() / (double) Value.MS_PREFIX_TABLE[Value.Base.B_10.ordinal()][p_prefix.ordinal()];
+    }
+
+    /**
+     * Get the total value of all threads summed up
+     *
+     * @return Total value
+     */
+    public long getTotalValue() {
+        long val = 0;
+
+        for (AbstractOperation[] opArr : m_pool) {
+            for (AbstractOperation op : opArr) {
+                if (op != null) {
+                    val += ((Value) op).getTotalValue();
+                }
+            }
+        }
+
+        return val;
+    }
+
+    /**
+     * Get the total value
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Total value scaled to specified prefix
+     */
+    public double getTotalValue(final Value.Prefix p_prefix) {
+        return getTotalValue() / (double) Value.MS_PREFIX_TABLE[Value.Base.B_10.ordinal()][p_prefix.ordinal()];
+    }
+
+    /**
+     * Get the average value of all applied values of all threads
+     *
+     * @return Average value
+     */
+    public double getAvgValue() {
+        long counter = getCounter();
+
+        return counter == 0 ? 0.0 : (double) getTotalValue() / counter;
+    }
+
+    /**
+     * Get the average value of all applied values of all threads
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Average value scaled to specified prefix
+     */
+    public double getAvgValue(final Value.Prefix p_prefix) {
+        return getAvgValue() / (double) Value.MS_PREFIX_TABLE[Value.Base.B_10.ordinal()][p_prefix.ordinal()];
+    }
+
+    /**
+     * Get the min value of all applied values of all threads
+     *
+     * @return Min value
+     */
+    public long getMinValue() {
+        long min = Long.MAX_VALUE;
+
+        for (AbstractOperation[] opArr : m_pool) {
+            for (AbstractOperation op : opArr) {
+                if (op != null) {
+                    long val = ((Value) op).getMinValue();
+
+                    if (val < min) {
+                        min = val;
+                    }
+                }
+            }
+        }
+
+        return min;
+    }
+
+    /**
+     * Get the min value of all applied values
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Min value scaled to specified prefix
+     */
+    public double getMinValue(final Value.Prefix p_prefix) {
+        return getMinValue() / (double) Value.MS_PREFIX_TABLE[Value.Base.B_10.ordinal()][p_prefix.ordinal()];
+    }
+
+    /**
+     * Get the max value of all applied values of all threads
+     *
+     * @return Max value
+     */
+    public long getMaxValue() {
+        long max = Long.MIN_VALUE;
+
+        for (AbstractOperation[] opArr : m_pool) {
+            for (AbstractOperation op : opArr) {
+                if (op != null) {
+                    long val = ((Value) op).getMaxValue();
+
+                    if (val > max) {
+                        max = val;
+                    }
+                }
+            }
+        }
+
+        return max;
+    }
+
+    /**
+     * Get the max value of all applied values of all threads
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Max value scaled to specified prefix
+     */
+    public double getMaxValue(final Value.Prefix p_prefix) {
+        return getMaxValue() / (double) Value.MS_PREFIX_TABLE[Value.Base.B_10.ordinal()][p_prefix.ordinal()];
     }
 
     /**
      * Increment the total value by 1
      */
     public void inc() {
-        getThreadLocalValue().inc();
+        ((Value) getThreadLocalValue()).inc();
     }
 
     /**
@@ -60,87 +200,6 @@ public class ValuePool extends AbstractOperation {
      *         Value to add to the total value
      */
     public void add(final long p_val) {
-        getThreadLocalValue().add(p_val);
-    }
-
-    @Override
-    public String dataToString(final String p_indent, final boolean p_extended) {
-        // TODO limit if more than e.g. 10 threads -> parameter
-
-        StringBuilder builder = new StringBuilder();
-
-        int entries = m_numberEntries.get();
-
-        for (int i = 0; i < m_pool.size(); i++) {
-            for (int j = 0; j < m_pool.get(i).length; j++) {
-                if (m_pool.get(i)[j] != null) {
-                    builder.append(p_indent);
-                    builder.append("id ");
-                    builder.append((i + 1) * j);
-                    builder.append(": ");
-                    builder.append(m_pool.get(i)[j].dataToString("", p_extended));
-
-                    if (--entries > 0) {
-                        builder.append('\n');
-                    }
-                }
-            }
-        }
-
-        return builder.toString();
-    }
-
-    @Override
-    public String generateCSVHeader(final char p_delim) {
-        return new Value(m_class, "dummy").generateCSVHeader(p_delim);
-    }
-
-    @Override
-    public String toCSV(final char p_delim) {
-        StringBuilder builder = new StringBuilder();
-
-        int entries = m_numberEntries.get();
-
-        for (int i = 0; i < m_pool.size(); i++) {
-            for (int j = 0; j < m_pool.get(i).length; j++) {
-                if (m_pool.get(i)[j] != null) {
-                    builder.append(m_pool.get(i)[j].toCSV(p_delim));
-
-                    if (--entries > 0) {
-                        builder.append('\n');
-                    }
-                }
-            }
-        }
-
-        return builder.toString();
-    }
-
-    /**
-     * Get the value object for the current thread
-     */
-    private Value getThreadLocalValue() {
-        long threadId = Thread.currentThread().getId();
-
-        if (threadId >= m_pool.size() * MS_BLOCK_SIZE_POOL) {
-            m_poolLock.lock();
-
-            while (threadId >= m_pool.size() * MS_BLOCK_SIZE_POOL) {
-                m_pool.add(new Value[MS_BLOCK_SIZE_POOL]);
-            }
-
-            m_poolLock.unlock();
-        }
-
-        Value value = m_pool.get((int) (threadId / MS_BLOCK_SIZE_POOL))[(int) (threadId % MS_BLOCK_SIZE_POOL)];
-
-        if (value == null) {
-            value = new Value(m_class, m_name + '-' + Thread.currentThread().getId() + '-' +
-                    Thread.currentThread().getName());
-            m_pool.get((int) (threadId / MS_BLOCK_SIZE_POOL))[(int) (threadId % MS_BLOCK_SIZE_POOL)] = value;
-            m_numberEntries.incrementAndGet();
-        }
-
-        return value;
+        ((Value) getThreadLocalValue()).add(p_val);
     }
 }
