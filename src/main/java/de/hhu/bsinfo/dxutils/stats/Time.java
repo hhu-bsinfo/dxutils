@@ -16,8 +16,6 @@
 
 package de.hhu.bsinfo.dxutils.stats;
 
-import de.hhu.bsinfo.pt.PerfTimer;
-
 /**
  * Statistics operation to measure time
  *
@@ -26,10 +24,6 @@ import de.hhu.bsinfo.pt.PerfTimer;
 public class Time extends AbstractOperation {
     public enum Prefix {
         NANO, MICRO, MILLI, SEC
-    }
-
-    static {
-        PerfTimer.init(PerfTimer.Type.SYSTEM_NANO_TIME);
     }
 
     static final double[] MS_PREFIX_TABLE = {
@@ -67,7 +61,7 @@ public class Time extends AbstractOperation {
      */
     public void start() {
         m_counter++;
-        m_start = PerfTimer.start();
+        m_start = System.nanoTime();
     }
 
     /**
@@ -80,7 +74,7 @@ public class Time extends AbstractOperation {
             return 0;
         }
 
-        long delta = PerfTimer.convertToNs(PerfTimer.considerOverheadForDelta(PerfTimer.endWeak() - m_start));
+        long delta = System.nanoTime() - m_start;
         m_start = 0;
 
         m_total += delta;
