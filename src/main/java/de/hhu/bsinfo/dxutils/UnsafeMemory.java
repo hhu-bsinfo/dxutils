@@ -20,6 +20,7 @@ package de.hhu.bsinfo.dxutils;
  * Access and (manually) manage memory on the non-jvm heap (unsafe)
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 11.07.2017
+ * @author Florian Hucke, florian.hucke@hhu.de, 08.02.2018
  */
 public final class UnsafeMemory {
     private static final UnsafeHandler ms_unsafeHandler = UnsafeHandler.getInstance();
@@ -472,5 +473,35 @@ public final class UnsafeMemory {
      */
     public static void writeDouble(final long p_ptr, final double p_value) {
         ms_unsafeHandler.getUnsafe().putDouble(p_ptr, p_value);
+    }
+
+    /**
+     * Compare and Swap operation on a int value
+     *
+     * @param p_ptr
+     *          Address of the int value
+     * @param p_expected_value
+     *          Expected value
+     * @param p_new_value
+     *          New value
+     * @return true if int is replaced else false
+     */
+    public static boolean compareAndSwapInt(final long p_ptr, int p_expected_value, int p_new_value){
+        return ms_unsafeHandler.getUnsafe().compareAndSwapInt(null, p_ptr, p_expected_value, p_new_value);
+    }
+
+    /**
+     * Compare and Swap operation on a long value
+     *
+     * @param p_ptr
+     *          Address of the long value
+     * @param p_expected_value
+     *          Expected value
+     * @param p_new_value
+     *          New value
+     * @return true if int is replaced else false
+     */
+    public static boolean compareAndSwapLong(final long p_ptr, long p_expected_value, long p_new_value){
+        return ms_unsafeHandler.getUnsafe().compareAndSwapLong(null, p_ptr, p_expected_value, p_new_value);
     }
 }
