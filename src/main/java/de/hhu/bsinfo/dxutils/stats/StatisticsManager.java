@@ -78,6 +78,23 @@ public final class StatisticsManager extends Thread {
     }
 
     /**
+     * Returns a list of registered operation for a certain class
+     * @param p_class Class
+     * @return list of registered operations
+     */
+    public ArrayList<AbstractOperation> getClassStatistics(final Class<?> p_class) {
+        return m_operationsByClasses.get(p_class);
+    }
+
+    /**
+     * Returns all registered operations
+     * @return map of registered operations (for each class)
+     */
+    public Map<Class<?>, ArrayList<AbstractOperation>> getAllStatistics() {
+        return m_operationsByClasses;
+    }
+
+    /**
      * Register a new operation. This must be called for every operation to include it in all outputs the manager
      * is handling (e.g. periodic printing, printing to file)
      *
