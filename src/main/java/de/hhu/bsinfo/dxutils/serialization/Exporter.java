@@ -69,6 +69,16 @@ public interface Exporter {
     void writeShort(final short p_v);
 
     /**
+     * Write a char to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_v
+     *         Value to write.
+     */
+    void writeChar(final char p_v);
+
+    /**
      * Write an int to the target.
      * Use this call in your exportable object in the
      * export call to write data to the target.
@@ -151,6 +161,17 @@ public interface Exporter {
     int writeShorts(final short[] p_array);
 
     /**
+     * Write a char array to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_array
+     *         Array to write.
+     * @return Number of written elements.
+     */
+    int writeChars(final char[] p_array);
+
+    /**
      * Write an int array to the target.
      * Use this call in your exportable object in the
      * export call to write data to the target.
@@ -203,6 +224,21 @@ public interface Exporter {
     int writeShorts(final short[] p_array, final int p_offset, final int p_length);
 
     /**
+     * Write a char array to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_array
+     *         Array to write.
+     * @param p_offset
+     *         Offset to start writing from.
+     * @param p_length
+     *         Number of elements to write.
+     * @return Number of written elements.
+     */
+    int writeChars(final char[] p_array, final int p_offset, final int p_length);
+
+    /**
      * Write an int array to the target.
      * Use this call in your exportable object in the
      * export call to write data to the target.
@@ -251,6 +287,16 @@ public interface Exporter {
      *         Array to write
      */
     void writeShortArray(final short[] p_array);
+
+    /**
+     * Write a char array to the target.
+     * The array must be written as a self containing object,
+     * i.e. with length information
+     *
+     * @param p_array
+     *         Array to write
+     */
+    void writeCharArray(final char[] p_array);
 
     /**
      * Write an int array to the target.

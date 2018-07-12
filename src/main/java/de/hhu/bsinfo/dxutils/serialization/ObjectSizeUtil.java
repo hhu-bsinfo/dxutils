@@ -73,6 +73,17 @@ public final class ObjectSizeUtil {
     }
 
     /**
+     * Get the serialization size for a full char array (including length field)
+     *
+     * @param p_arr
+     *         Array to get the full serialization size for
+     * @return Serialization size
+     */
+    public static int sizeofCharArray(final char[] p_arr) {
+        return CompactNumber.getSizeOfNumber(p_arr.length) + p_arr.length * Character.BYTES;
+    }
+
+    /**
      * Get the serialization size for a full int array (including length field)
      *
      * @param p_arr

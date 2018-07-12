@@ -67,6 +67,15 @@ public interface Importer {
     short readShort(short p_short);
 
     /**
+     * Read a char from the target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @return Value read.
+     */
+    char readChar(char p_char);
+
+    /**
      * Read an int from the target.
      * Use this call in your importable object in the
      * import call to read data from the target.
@@ -143,6 +152,17 @@ public interface Importer {
     int readShorts(final short[] p_array);
 
     /**
+     * Read data into a char array from target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @param p_array
+     *         Array to read into.
+     * @return Number of chars read;
+     */
+    int readChars(final short[] p_array);
+
+    /**
      * Read data into an int array from target.
      * Use this call in your importable object in the
      * import call to read data from the target.
@@ -195,6 +215,21 @@ public interface Importer {
     int readShorts(final short[] p_array, final int p_offset, final int p_length);
 
     /**
+     * Read data into a char array from target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @param p_array
+     *         Array to read into.
+     * @param p_offset
+     *         Offset to start in the array for reading into.
+     * @param p_length
+     *         Number of chars to read.
+     * @return Number of chars read.
+     */
+    int readChars(final char[] p_array, final int p_offset, final int p_length);
+
+    /**
      * Read data into an int array from target.
      * Use this call in your importable object in the
      * import call to read data from the target.
@@ -241,6 +276,15 @@ public interface Importer {
      * @return New array with data read.
      */
     short[] readShortArray(short[] p_array);
+
+    /**
+     * Read a char array from the target.
+     * The array to be read must be stored as self containing object,
+     * i.e. with length information
+     *
+     * @return New array with data read.
+     */
+    char[] readCharArray(char[] p_array);
 
     /**
      * Read an int array from the target.
