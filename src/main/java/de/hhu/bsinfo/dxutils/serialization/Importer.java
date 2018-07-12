@@ -160,7 +160,7 @@ public interface Importer {
      *         Array to read into.
      * @return Number of chars read;
      */
-    int readChars(final short[] p_array);
+    int readChars(final char[] p_array);
 
     /**
      * Read data into an int array from target.

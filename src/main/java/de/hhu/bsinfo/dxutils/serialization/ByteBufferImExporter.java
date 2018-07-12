@@ -58,6 +58,11 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public void writeChar(final char p_v) {
+        m_byteBuffer.putChar(p_v);
+    }
+
+    @Override
     public void writeInt(final int p_v) {
         m_byteBuffer.putInt(p_v);
     }
@@ -120,6 +125,11 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public char readChar(final char p_char) {
+        return m_byteBuffer.getChar();
+    }
+
+    @Override
     public int readInt(final int p_int) {
         return m_byteBuffer.getInt();
     }
@@ -176,6 +186,11 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeChars(final char[] p_array) {
+        return writeChars(p_array, 0, p_array.length);
+    }
+
+    @Override
     public int writeInts(final int[] p_array) {
         return writeInts(p_array, 0, p_array.length);
     }
@@ -189,6 +204,15 @@ public class ByteBufferImExporter implements Importer, Exporter {
     public int writeShorts(final short[] p_array, final int p_offset, final int p_length) {
         for (int i = 0; i < p_length; i++) {
             m_byteBuffer.putShort(p_array[p_offset + i]);
+        }
+
+        return p_length;
+    }
+
+    @Override
+    public int writeChars(final char[] p_array, final int p_offset, final int p_length) {
+        for (int i = 0; i < p_length; i++) {
+            m_byteBuffer.putChar(p_array[p_offset + i]);
         }
 
         return p_length;
@@ -225,6 +249,12 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public void writeCharArray(final char[] p_array) {
+        writeCompactNumber(p_array.length);
+        writeChars(p_array);
+    }
+
+    @Override
     public void writeIntArray(final int[] p_array) {
         writeCompactNumber(p_array.length);
         writeInts(p_array);
@@ -242,6 +272,11 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int readChars(final char[] p_array) {
+        return readChars(p_array, 0, p_array.length);
+    }
+
+    @Override
     public int readInts(final int[] p_array) {
         return readInts(p_array, 0, p_array.length);
     }
@@ -255,6 +290,15 @@ public class ByteBufferImExporter implements Importer, Exporter {
     public int readShorts(final short[] p_array, final int p_offset, final int p_length) {
         for (int i = 0; i < p_length; i++) {
             p_array[p_offset + i] = m_byteBuffer.getShort();
+        }
+
+        return p_length;
+    }
+
+    @Override
+    public int readChars(final char[] p_array, final int p_offset, final int p_length) {
+        for (int i = 0; i < p_length; i++) {
+            p_array[p_offset + i] = m_byteBuffer.getChar();
         }
 
         return p_length;
@@ -289,6 +333,13 @@ public class ByteBufferImExporter implements Importer, Exporter {
     public short[] readShortArray(final short[] p_array) {
         short[] arr = new short[readCompactNumber(0)];
         readShorts(arr);
+        return arr;
+    }
+
+    @Override
+    public char[] readCharArray(final char[] p_array) {
+        char[] arr = new char[readCompactNumber(0)];
+        readChars(arr);
         return arr;
     }
 

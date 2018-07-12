@@ -98,6 +98,15 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public void writeChar(final char p_v) {
+        try {
+            m_file.writeChar(p_v);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void writeInt(final int p_v) {
         try {
             m_file.writeInt(p_v);
@@ -167,6 +176,18 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeChars(final char[] p_array) {
+        try {
+            for (int i = 0; i < p_array.length; i++) {
+                m_file.writeChar(p_array[i]);
+            }
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int writeInts(final int[] p_array) {
         try {
             for (int i = 0; i < p_array.length; i++) {
@@ -213,6 +234,18 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeChars(final char[] p_array, final int p_offset, final int p_length) {
+        try {
+            for (int i = p_offset; i < p_length; i++) {
+                m_file.writeChar(p_array[i]);
+            }
+            return p_length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int writeInts(final int[] p_array, final int p_offset, final int p_length) {
         try {
             for (int i = p_offset; i < p_length; i++) {
@@ -246,6 +279,12 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     public void writeShortArray(final short[] p_array) {
         writeCompactNumber(p_array.length);
         writeShorts(p_array);
+    }
+
+    @Override
+    public void writeCharArray(final char[] p_array) {
+        writeCompactNumber(p_array.length);
+        writeChars(p_array);
     }
 
     @Override
@@ -287,6 +326,15 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     public short readShort(final short p_short) {
         try {
             return m_file.readShort();
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public char readChar(final char p_char) {
+        try {
+            return m_file.readChar();
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
@@ -369,6 +417,18 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int readChars(final char[] p_array) {
+        try {
+            for (int i = 0; i < p_array.length; i++) {
+                p_array[i] = m_file.readChar();
+            }
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int readInts(final int[] p_array) {
         try {
             for (int i = 0; i < p_array.length; i++) {
@@ -414,6 +474,18 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int readChars(char[] p_array, int p_offset, int p_length) {
+        try {
+            for (int i = p_offset; i < p_length; i++) {
+                p_array[i] = m_file.readChar();
+            }
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int readInts(final int[] p_array, final int p_offset, final int p_length) {
         try {
             for (int i = p_offset; i < p_length; i++) {
@@ -448,6 +520,13 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     public short[] readShortArray(final short[] p_array) {
         short[] arr = new short[readCompactNumber(0)];
         readShorts(arr);
+        return arr;
+    }
+
+    @Override
+    public char[] readCharArray(final char[] p_array) {
+        char[] arr = new char[readCompactNumber(0)];
+        readChars(arr);
         return arr;
     }
 
