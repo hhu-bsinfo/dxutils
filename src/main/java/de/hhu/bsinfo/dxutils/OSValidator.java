@@ -22,7 +22,6 @@ package de.hhu.bsinfo.dxutils;
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 04.04.2016
  */
 public final class OSValidator {
-
     private static String ms_os = System.getProperty("os.name").toLowerCase();
 
     public static final String MS_WINDOWS = "win";

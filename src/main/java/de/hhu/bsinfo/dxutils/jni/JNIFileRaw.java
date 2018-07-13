@@ -114,8 +114,8 @@ public final class JNIFileRaw {
      *         whether the file length must be set after writing (0) or not (1)
      * @return 0 on success or -1 on error
      */
-    public static native int write(final int p_fileID, final long p_data, final int p_offset, final int p_length, final long p_position, final byte p_retainEnd,
-            final byte p_setFileLength);
+    public static native int write(final int p_fileID, final long p_data, final int p_offset, final int p_length,
+            final long p_position, final byte p_retainEnd, final byte p_setFileLength);
 
     /**
      * Reads from logfile into data-buffer at current position
@@ -132,7 +132,8 @@ public final class JNIFileRaw {
      *         read-position in file
      * @return 0 on success or -1 on error
      */
-    public static native int read(final int p_fileID, final long p_data, final int p_offset, final int p_length, final long p_position);
+    public static native int read(final int p_fileID, final long p_data, final int p_offset, final int p_length,
+            final long p_position);
 
     /**
      * returns the allocated length of the file - warning: do not use as .length to achieve

@@ -71,8 +71,8 @@ public final class JNIFileDirect {
      *         whether the file length must be set after writing (0) or not (1)
      * @return 0 on success or -1 on error
      */
-    public static native int write(final int p_fileID, final long p_data, final int p_offset, final int p_length, final long p_position, final byte p_retainEnd,
-            final byte p_setFileLength);
+    public static native int write(final int p_fileID, final long p_data, final int p_offset, final int p_length,
+            final long p_position, final byte p_retainEnd, final byte p_setFileLength);
 
     /**
      * Reads from logfile into data-buffer at current position
@@ -89,7 +89,8 @@ public final class JNIFileDirect {
      *         read-position in file
      * @return 0 on success or -1 on error
      */
-    public static native int read(final int p_fileID, final long p_data, final int p_offset, final int p_length, final long p_position);
+    public static native int read(final int p_fileID, final long p_data, final int p_offset, final int p_length,
+            final long p_position);
 
     /**
      * Sets the filepointer to given value, measured from beginning of the file

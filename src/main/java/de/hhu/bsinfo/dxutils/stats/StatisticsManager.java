@@ -79,7 +79,9 @@ public final class StatisticsManager extends Thread {
 
     /**
      * Returns a list of registered operation for a certain class
-     * @param p_class Class
+     *
+     * @param p_class
+     *         Class
      * @return list of registered operations
      */
     public ArrayList<AbstractOperation> getClassStatistics(final Class<?> p_class) {
@@ -88,6 +90,7 @@ public final class StatisticsManager extends Thread {
 
     /**
      * Returns all registered operations
+     *
      * @return map of registered operations (for each class)
      */
     public Map<Class<?>, ArrayList<AbstractOperation>> getAllStatistics() {

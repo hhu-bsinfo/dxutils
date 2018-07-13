@@ -146,9 +146,9 @@ public class Throughput extends AbstractOperation {
         return p_indent + formatValue() + ";value counter " + m_value.getCounter() + ";total " + m_value.formatValue(
                 m_value.getTotalValue()) + ";avg " + m_value.formatValue(m_value.getAvgValue()) +
                 ";min " + m_value.formatValue(m_value.getMinValue()) + ";max " + m_value.formatValue(
-                m_value.getMaxValue()) + "time counter " + m_time.getCounter() + ";total " + m_time.formatTime(
-                m_time.getTotalTime()) + ";avg " + m_time.formatTime(m_time.getAvgTime()) + ";best " +
-                m_time.formatTime(m_time.getBestTime()) + ";worst " + m_time.formatTime(m_time.getWorstTime());
+                m_value.getMaxValue()) + "time counter " + m_time.getCounter() + ";total " + Time.formatTime(
+                m_time.getTotalTime()) + ";avg " + Time.formatTime(m_time.getAvgTime()) + ";best " +
+                Time.formatTime(m_time.getBestTime()) + ";worst " + Time.formatTime(m_time.getWorstTime());
     }
 
     @Override
@@ -162,9 +162,9 @@ public class Throughput extends AbstractOperation {
     public String toCSV(final char p_delim) {
         return getOperationName() + p_delim + getThroughput() + p_delim + m_value.getCounter() + p_delim +
                 m_value.getTotalValue() + p_delim + m_value.getAvgValue() + p_delim + m_value.getMinValue() + p_delim +
-                m_value.getMaxValue() + p_delim + m_time.getCounter() + p_delim + m_time.formatTime(
-                m_time.getTotalTime()) + p_delim + m_time.formatTime(m_time.getAvgTime()) + p_delim +
-                m_time.formatTime(m_time.getBestTime()) + p_delim + m_time.formatTime(m_time.getWorstTime());
+                m_value.getMaxValue() + p_delim + m_time.getCounter() + p_delim + Time.formatTime(
+                m_time.getTotalTime()) + p_delim + Time.formatTime(m_time.getAvgTime()) + p_delim +
+                Time.formatTime(m_time.getBestTime()) + p_delim + Time.formatTime(m_time.getWorstTime());
     }
 
     private String formatValue() {

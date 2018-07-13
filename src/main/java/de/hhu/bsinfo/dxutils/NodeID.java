@@ -23,7 +23,6 @@ package de.hhu.bsinfo.dxutils;
  */
 public final class NodeID {
     public static final short INVALID_ID = -1;
-
     public static final int MAX_ID = 65535;
 
     /**

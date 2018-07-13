@@ -169,6 +169,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 m_file.writeShort(p_array[i]);
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -181,6 +182,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 m_file.writeChar(p_array[i]);
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -193,6 +195,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 m_file.writeInt(p_array[i]);
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -205,6 +208,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 m_file.writeLong(p_array[i]);
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -227,6 +231,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 m_file.writeShort(p_array[i]);
             }
+
             return p_length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -239,6 +244,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 m_file.writeChar(p_array[i]);
             }
+
             return p_length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -251,6 +257,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 m_file.writeInt(p_array[i]);
             }
+
             return p_length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -263,6 +270,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 m_file.writeLong(p_array[i]);
             }
+
             return p_length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -380,6 +388,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     public int readCompactNumber(int p_int) {
         byte[] tmp = new byte[4];
         int i;
+
         for (i = 0; i < Integer.BYTES; i++) {
             tmp[i] = readByte((byte) 0);
             if ((tmp[i] & 0x80) == 0) {
@@ -410,6 +419,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 p_array[i] = m_file.readShort();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -422,6 +432,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 p_array[i] = m_file.readChar();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -434,6 +445,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 p_array[i] = m_file.readInt();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -446,6 +458,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = 0; i < p_array.length; i++) {
                 p_array[i] = m_file.readLong();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -467,6 +480,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 p_array[i] = m_file.readShort();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -479,6 +493,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 p_array[i] = m_file.readChar();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -491,6 +506,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 p_array[i] = m_file.readInt();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);
@@ -503,6 +519,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
             for (int i = p_offset; i < p_length; i++) {
                 p_array[i] = m_file.readLong();
             }
+
             return p_array.length;
         } catch (final IOException e) {
             throw new RuntimeException(e);

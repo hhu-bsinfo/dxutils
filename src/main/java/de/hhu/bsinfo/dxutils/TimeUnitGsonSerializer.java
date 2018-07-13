@@ -34,7 +34,8 @@ import de.hhu.bsinfo.dxutils.unit.TimeUnit;
  */
 public class TimeUnitGsonSerializer implements JsonDeserializer<TimeUnit>, JsonSerializer<TimeUnit> {
     @Override
-    public TimeUnit deserialize(final JsonElement p_jsonElement, final Type p_type, final JsonDeserializationContext p_jsonDeserializationContext) {
+    public TimeUnit deserialize(final JsonElement p_jsonElement, final Type p_type,
+            final JsonDeserializationContext p_jsonDeserializationContext) {
 
         JsonObject jsonObj = p_jsonElement.getAsJsonObject();
         long value = jsonObj.get("m_value").getAsLong();
@@ -51,7 +52,8 @@ public class TimeUnitGsonSerializer implements JsonDeserializer<TimeUnit>, JsonS
     }
 
     @Override
-    public JsonElement serialize(final TimeUnit p_timeUnit, final Type p_type, final JsonSerializationContext p_jsonSerializationContext) {
+    public JsonElement serialize(final TimeUnit p_timeUnit, final Type p_type,
+            final JsonSerializationContext p_jsonSerializationContext) {
 
         JsonObject jsonObj = new JsonObject();
 

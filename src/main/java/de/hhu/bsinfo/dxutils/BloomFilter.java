@@ -37,7 +37,7 @@ public final class BloomFilter {
     static {
         try {
             ms_digestFunction = java.security.MessageDigest.getInstance("MD5");
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException ignored) {
             ms_digestFunction = null;
         }
     }

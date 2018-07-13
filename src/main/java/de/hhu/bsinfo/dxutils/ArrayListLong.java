@@ -232,6 +232,7 @@ public class ArrayListLong implements Importable, Exportable {
         long oldValue = m_array[p_index];
 
         int numMoved = m_size - p_index - 1;
+
         if (numMoved > 0) {
             System.arraycopy(m_array, p_index + 1, m_array, p_index, numMoved);
         }

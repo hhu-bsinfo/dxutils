@@ -60,9 +60,11 @@ public final class CompactNumber {
         ret = new byte[length];
 
         int i;
+
         for (i = 0; i < length - 1; i++) {
             ret[i] = (byte) ((byte) (p_number >> 7 * i) & 0x7F | 0x80);
         }
+
         ret[i] = (byte) ((byte) (p_number >> 7 * i) & 0x7F);
 
         return ret;
@@ -81,9 +83,11 @@ public final class CompactNumber {
      */
     public static int decompact(final byte[] p_array, final int p_offset, final int p_length) {
         int ret = 0;
+
         for (int i = p_offset; i < p_offset + p_length + 1; i++) {
             ret += (p_array[i] & 0x7F) << i * 7;
         }
+
         return ret;
     }
 

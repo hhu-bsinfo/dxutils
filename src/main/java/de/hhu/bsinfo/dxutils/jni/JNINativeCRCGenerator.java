@@ -40,7 +40,8 @@ public final class JNINativeCRCGenerator {
      *         the length of the data to hash.
      * @return the CRC32C checksum.
      */
-    public static native int hashNative(final int p_checksum, final long p_data, final int p_offset, final int p_length);
+    public static native int hashNative(final int p_checksum, final long p_data, final int p_offset,
+            final int p_length);
 
     /**
      * Update CRC32 checksum.
@@ -55,5 +56,6 @@ public final class JNINativeCRCGenerator {
      *         the length of the data to hash.
      * @return the CRC32C checksum.
      */
-    public static native int hashHeap(final int p_checksum, final byte[] p_data, final int p_offset, final int p_length);
+    public static native int hashHeap(final int p_checksum, final byte[] p_data, final int p_offset,
+            final int p_length);
 }

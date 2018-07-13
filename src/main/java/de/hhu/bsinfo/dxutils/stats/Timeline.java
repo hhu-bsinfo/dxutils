@@ -56,11 +56,17 @@ public class Timeline extends AbstractOperation {
         m_times = p_times;
     }
 
+    /**
+     * Start the first measurement of the timeline
+     */
     public void start() {
         m_pos = 0;
         m_times[m_pos].start();
     }
 
+    /**
+     * Stop the currently running section of the timeline and start the next one
+     */
     public void nextSection() {
         m_times[m_pos].stop();
         m_pos++;
@@ -72,6 +78,9 @@ public class Timeline extends AbstractOperation {
         m_times[m_pos].start();
     }
 
+    /**
+     * Stop the currently running section and end timeline measurement
+     */
     public void stop() {
         if (m_pos == 0) {
             return;

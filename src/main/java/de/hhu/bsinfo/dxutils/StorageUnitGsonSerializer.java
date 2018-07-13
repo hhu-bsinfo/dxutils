@@ -34,13 +34,15 @@ import de.hhu.bsinfo.dxutils.unit.StorageUnit;
  */
 public class StorageUnitGsonSerializer implements JsonDeserializer<StorageUnit>, JsonSerializer<StorageUnit> {
     @Override
-    public StorageUnit deserialize(final JsonElement p_jsonElement, final Type p_type, final JsonDeserializationContext p_jsonDeserializationContext) {
+    public StorageUnit deserialize(final JsonElement p_jsonElement, final Type p_type,
+            final JsonDeserializationContext p_jsonDeserializationContext) {
 
         JsonObject jsonObj = p_jsonElement.getAsJsonObject();
         long value = jsonObj.get("m_value").getAsLong();
 
         JsonElement unitElem = jsonObj.get("m_unit");
         String unit;
+
         if (unitElem == null) {
             unit = StorageUnit.BYTE;
         } else {
@@ -51,7 +53,8 @@ public class StorageUnitGsonSerializer implements JsonDeserializer<StorageUnit>,
     }
 
     @Override
-    public JsonElement serialize(final StorageUnit p_storageUnit, final Type p_type, final JsonSerializationContext p_jsonSerializationContext) {
+    public JsonElement serialize(final StorageUnit p_storageUnit, final Type p_type,
+            final JsonSerializationContext p_jsonSerializationContext) {
 
         JsonObject jsonObj = new JsonObject();
 

@@ -43,9 +43,9 @@ public class IPV4Unit {
      * Constructor
      *
      * @param p_ip
-     *     IPV4 address, format xxx.xxx.xxx.xxx
+     *         IPV4 address, format xxx.xxx.xxx.xxx
      * @param p_port
-     *     Port
+     *         Port
      */
     public IPV4Unit(final String p_ip, final int p_port) {
         m_ip = p_ip;
