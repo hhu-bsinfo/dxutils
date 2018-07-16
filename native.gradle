@@ -1,0 +1,108 @@
+import org.gradle.internal.jvm.Jvm
+
+if (!Boolean.parseBoolean(project.nativeBuild)) {
+    return
+}
+
+model {
+    //noinspection GroovyAssignabilityCheck
+    components {
+        JNINativeCRCGenerator(NativeLibrarySpec) {
+            sources {
+                c {
+                    source {
+                        srcDir 'src/main/c/crc'
+                        include '**/*.c'
+                    }
+
+                    exportedHeaders {
+                        srcDirs "src/main/c/crc",
+                                "${Jvm.current().javaHome}/include",
+                                "${Jvm.current().javaHome}/include/linux"
+                    }
+                }
+            }
+
+            binaries.all {
+                cCompiler.args << "-lz"
+                cCompiler.args << "-msse4.2"
+            }
+        }
+
+        JNIFileDirect(NativeLibrarySpec) {
+            sources {
+                c {
+                    source {
+                        srcDir 'src/main/c/file/direct'
+                        include '**/*.c'
+                    }
+
+                    exportedHeaders {
+                        srcDirs "src/main/c/file/direct",
+                                "${Jvm.current().javaHome}/include",
+                                "${Jvm.current().javaHome}/include/linux"
+                    }
+                }
+            }
+        }
+
+        JNIFileRaw(NativeLibrarySpec) {
+            sources {
+                c {
+                    source {
+                        srcDir 'src/main/c/file/raw'
+                        include '**/*.c'
+                    }
+
+                    exportedHeaders {
+                        srcDirs "src/main/c/file/raw",
+                                "${Jvm.current().javaHome}/include",
+                                "${Jvm.current().javaHome}/include/linux"
+                    }
+                }
+            }
+        }
+
+        JNINativeThreadAffinity(NativeLibrarySpec) {
+            sources {
+                c {
+                    source {
+                        srcDir 'src/main/c/thread'
+                        include '**/*.c'
+                    }
+
+                    exportedHeaders {
+                        srcDirs "src/main/c/thread",
+                                "${Jvm.current().javaHome}/include",
+                                "${Jvm.current().javaHome}/include/linux"
+                    }
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources.srcDirs += file("${project.buildDir}/natives")
+
+task copyNatives(type: Copy) {
+    from("${project.buildDir}/libs") {
+        include '**/*.so'
+    }
+
+    into "${project.buildDir}/natives"
+
+    eachFile {
+        it.path = name
+    }
+
+    includeEmptyDirs = false
+}
+
+copyNatives.dependsOn(
+        'JNIFileDirectSharedLibrary',
+        'JNIFileRawSharedLibrary',
+        'JNINativeCRCGeneratorSharedLibrary',
+        'JNINativeThreadAffinitySharedLibrary'
+)
+
+processResources.dependsOn(copyNatives)

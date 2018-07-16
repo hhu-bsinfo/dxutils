@@ -1,64 +1,49 @@
 plugins {
-
     id 'java'
-
+    id 'c'
     id 'maven-publish'
-
-    id 'com.jfrog.bintray' version '1.7.3'
+    id 'com.jfrog.bintray' version '1.8.4'
 }
 
 group 'de.hhu.bsinfo'
-
 version '1.0.0'
-
 sourceCompatibility = '1.8'
-
 targetCompatibility = '1.8'
 
 repositories {
-
     mavenCentral()
 }
 
 tasks.withType(JavaCompile) {
-
     options.compilerArgs += ["-Werror", "-Xlint:sunapi", "-XDenableSunApiLintControl"]
 }
 
 task wrapper(type: Wrapper) {
-
     gradleVersion = "4.7"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-
     classifier = 'sources'
-
     from sourceSets.main.allSource
 }
 
 javadoc.failOnError = false
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
-
     classifier = 'javadoc'
-
     from javadoc.destinationDir
 }
 
 dependencies {
-
     implementation fileTree(dir: 'lib', include: ['*.jar'])
-
     implementation 'com.google.code.gson:gson:2.7'
-
     testImplementation 'junit:junit:4.12'
 }
 
 artifacts {
-
     archives sourcesJar
-
     archives javadocJar
 }
 
+apply from: 'native.gradle'
 apply from: 'publish.gradle'
