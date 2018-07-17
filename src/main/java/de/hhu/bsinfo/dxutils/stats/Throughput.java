@@ -113,6 +113,41 @@ public class Throughput extends AbstractOperation {
     }
 
     /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug() {
+        start();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug(final long p_val) {
+        start(p_val);
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void addDebug(final long p_val) {
+        add(p_val);
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void stopDebug() {
+        stop();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void stopDebug(final long p_val) {
+        stop(p_val);
+    }
+
+    /**
      * Get the current throughput in units/sec
      */
     public double getThroughput() {

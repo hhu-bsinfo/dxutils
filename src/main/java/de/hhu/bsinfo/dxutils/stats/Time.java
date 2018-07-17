@@ -91,6 +91,20 @@ public class Time extends AbstractOperation {
     }
 
     /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug() {
+        start();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public long stopDebug() {
+        return stop();
+    }
+
+    /**
      * Get the (call) counter value
      */
     public long getCounter() {

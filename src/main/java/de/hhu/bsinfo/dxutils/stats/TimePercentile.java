@@ -161,6 +161,13 @@ public class TimePercentile extends AbstractOperation {
         m_value.add(p_valueNs);
     }
 
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void recordDebug(final long p_valueNs) {
+        record(p_valueNs);
+    }
+
     @Override
     public String dataToString(final String p_indent, final boolean p_extended) {
         if (p_extended) {

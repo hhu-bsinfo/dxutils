@@ -94,6 +94,41 @@ public class ThroughputPool extends AbstractOperation {
         getThreadLocalValue().stop(p_val);
     }
 
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug() {
+        start();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug(final long p_val) {
+        start(p_val);
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void addDebug(final long p_val) {
+        add(p_val);
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void stopDebug() {
+        stop();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void stopDebug(final long p_val) {
+        stop(p_val);
+    }
+
     @Override
     public String dataToString(final String p_indent, final boolean p_extended) {
         // TODO limit if more than e.g. 10 threads -> parameter

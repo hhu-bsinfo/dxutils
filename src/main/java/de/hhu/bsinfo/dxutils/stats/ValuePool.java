@@ -202,4 +202,18 @@ public class ValuePool extends OperationPool {
     public void add(final long p_val) {
         ((Value) getThreadLocalValue()).add(p_val);
     }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void incDebug() {
+        inc();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void addDebug(final long p_val) {
+        add(p_val);
+    }
 }

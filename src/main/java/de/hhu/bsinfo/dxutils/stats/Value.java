@@ -229,6 +229,20 @@ public class Value extends AbstractOperation {
         }
     }
 
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void incDebug() {
+        inc();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void addDebug(final long p_val) {
+        add(p_val);
+    }
+
     @Override
     public String dataToString(final String p_indent, final boolean p_extended) {
         return p_indent + "counter " + m_counter + ";total " + formatValue(m_total) + ";avg " + formatValue(

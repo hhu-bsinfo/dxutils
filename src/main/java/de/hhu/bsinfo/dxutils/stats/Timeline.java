@@ -89,6 +89,27 @@ public class Timeline extends AbstractOperation {
         m_times[m_pos].stop();
     }
 
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug() {
+        start();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void nextSectionDebug() {
+        nextSection();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void stopDebug() {
+        stop();
+    }
+
     @Override
     public String dataToString(final String p_indent, final boolean p_extended) {
         StringBuilder builder = new StringBuilder();

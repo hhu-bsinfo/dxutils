@@ -242,6 +242,13 @@ public class TimePercentilePool extends OperationPool {
     }
 
     /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void recordDebug(final long p_valueNs) {
+        record(p_valueNs);
+    }
+
+    /**
      * Quicksort implementation.
      *
      * @param p_lowerIndex

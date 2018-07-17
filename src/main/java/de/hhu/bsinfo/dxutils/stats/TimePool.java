@@ -59,6 +59,20 @@ public class TimePool extends AbstractOperation {
         getThreadLocalTime().stop();
     }
 
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void startDebug() {
+        start();
+    }
+
+    /**
+     * "Debug version". Identical to normal call but is removed on non-debug builds.
+     */
+    public void stopDebug() {
+        stop();
+    }
+
     @Override
     public String dataToString(final String p_indent, final boolean p_extended) {
         // TODO limit if more than e.g. 10 threads -> parameter
