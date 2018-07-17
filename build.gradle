@@ -1,12 +1,15 @@
+import org.gradle.internal.jvm.Jvm
+
 plugins {
-    id 'java'
+    id 'java-library'
     id 'c'
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.4'
 }
 
-group 'de.hhu.bsinfo'
-version '1.0.0'
+group = 'de.hhu.bsinfo'
+version = '0.3.1-dev'
+
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
@@ -16,10 +19,6 @@ repositories {
 
 tasks.withType(JavaCompile) {
     options.compilerArgs += ["-Werror", "-Xlint:sunapi", "-XDenableSunApiLintControl"]
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.7"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -36,7 +35,11 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 dependencies {
     implementation fileTree(dir: 'lib', include: ['*.jar'])
-    implementation 'com.google.code.gson:gson:2.7'
+    api files(Jvm.current().toolsJar)
+    api 'com.google.code.gson:gson:2.7'
+    api 'org.apache.logging.log4j:log4j-core:2.11.0'
+    api 'org.apache.logging.log4j:log4j-api:2.11.0'
+    api 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.0'
     testImplementation 'junit:junit:4.12'
 }
 
@@ -47,3 +50,7 @@ artifacts {
 
 apply from: 'native.gradle'
 apply from: 'publish.gradle'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "4.9"
+}
