@@ -249,6 +249,13 @@ public class TimePercentilePool extends OperationPool {
     }
 
     /**
+     * "Performance version". Identical to normal call but is never removed by any build type.
+     */
+    public void recordPerf(final long p_valueNs) {
+        record(p_valueNs);
+    }
+
+    /**
      * Quicksort implementation.
      *
      * @param p_lowerIndex

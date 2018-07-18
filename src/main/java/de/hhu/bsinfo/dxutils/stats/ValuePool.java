@@ -216,4 +216,11 @@ public class ValuePool extends OperationPool {
     public void addDebug(final long p_val) {
         add(p_val);
     }
+
+    /**
+     * "Performance version". Identical to normal call but is never removed on any build type.
+     */
+    public void addPerf(final long p_val) {
+        add(p_val);
+    }
 }
