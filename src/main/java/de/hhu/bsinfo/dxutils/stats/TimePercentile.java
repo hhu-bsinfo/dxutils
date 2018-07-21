@@ -60,6 +60,17 @@ public class TimePercentile extends AbstractOperation {
     }
 
     /**
+     * Get the total value
+     *
+     * @param p_prefix
+     *          Prefix to apply
+     * @return Total value
+     */
+    public double getTotalValue(final Time.Prefix p_prefix) {
+        return m_value.getTotalValue() / Time.MS_PREFIX_TABLE[p_prefix.ordinal()];
+    }
+
+    /**
      * Get the average value
      *
      * @return Average value

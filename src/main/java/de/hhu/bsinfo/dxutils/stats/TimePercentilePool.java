@@ -26,6 +26,18 @@ public class TimePercentilePool extends OperationPool {
     }
 
     /**
+     * Get the thread local TimePercentile object. Can be used to get recorded data within
+     * the current thread, e.g. to display per thread separate results.
+     *
+     * Don't use this to record data, use the other wrapper calls from this class instead.
+     *
+     * @return Thread local TimePercentile object
+     */
+    public TimePercentile getThreadLocal() {
+        return (TimePercentile) super.getThreadLocalValue();
+    }
+
+    /**
      * Get the counter of all threads summed up
      *
      * @return Counter value
@@ -61,6 +73,17 @@ public class TimePercentilePool extends OperationPool {
         }
 
         return val;
+    }
+
+    /**
+     * Get the total value of all threads summed up
+     *
+     * @param p_prefix
+     *         Prefix to apply
+     * @return Total value
+     */
+    public double getTotalValue(final Time.Prefix p_prefix) {
+        return getTotalValue() / (double) Value.MS_PREFIX_TABLE[Value.Base.B_10.ordinal()][p_prefix.ordinal()];
     }
 
     /**
