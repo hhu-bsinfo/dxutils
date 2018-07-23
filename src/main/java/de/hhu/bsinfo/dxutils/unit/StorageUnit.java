@@ -143,6 +143,11 @@ public class StorageUnit implements Importable, Exportable {
         return getHumanReadable();
     }
 
+    @Override
+    public boolean equals(final Object p_object) {
+        return p_object instanceof StorageUnit && ((StorageUnit) p_object).m_bytes == m_bytes;
+    }
+
     /**
      * Get value in easy readable representation
      *
