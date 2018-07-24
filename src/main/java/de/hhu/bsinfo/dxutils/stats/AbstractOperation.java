@@ -35,7 +35,7 @@ public abstract class AbstractOperation implements CsvPrinter {
      * @param p_name
      *         Name for the operation
      */
-    AbstractOperation(final Class<?> p_class, final String p_name) {
+    public AbstractOperation(final Class<?> p_class, final String p_name) {
         m_class = p_class;
         m_name = p_name;
     }
