@@ -9,7 +9,7 @@ buildscript {
         }
 
         maven {
-            url "https://dl.bintray.com/hhu-bsinfo/dxutils"
+            url "https://dl.bintray.com/hhu-bsinfo/dxram"
         }
 
         maven {
@@ -17,9 +17,9 @@ buildscript {
         }
     }
 
-//    dependencies {
-//        classpath "de.hhu.bsinfo:dxgradle:0.3.1"
-//    }
+    dependencies {
+        classpath "de.hhu.bsinfo:dxgradle:0.3.1"
+    }
 }
 
 plugins {
@@ -30,9 +30,11 @@ plugins {
     id "com.jfrog.artifactory" version "4.7.5"
 }
 
-// apply plugin: 'dxgradle'
+apply plugin: 'dxgradle'
 group = 'de.hhu.bsinfo'
 version = '0.3.1' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+
+mainClassName = 'none'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -41,7 +43,7 @@ repositories {
     mavenCentral()
 
     maven {
-        url "https://dl.bintray.com/hhu-bsinfo/dxutils"
+        url "https://dl.bintray.com/hhu-bsinfo/dxram"
     }
 
     maven {
@@ -87,7 +89,7 @@ apply from: 'native.gradle'
 apply from: 'publish.gradle'
 apply from: 'bintray.gradle'
 apply from: 'artifactory.gradle'
-// apply from: 'types.gradle'
+apply from: 'types.gradle'
 
 task wrapper(type: Wrapper) {
     gradleVersion = "4.9"
