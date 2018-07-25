@@ -12,9 +12,9 @@ addons:
 stages:
 - name: build
 - name: snapshot
-  if: branch = none
+  if: branch = development
 - name: release
-  if: branch = none
+  if: branch = master
 
 jobs:
   include:
@@ -32,5 +32,5 @@ deploy:
   file: build/libs/dxutils-${TRAVIS_TAG}.jar
   on:
     repo: hhu-bsinfo/dxutils
-    branch: development
+    branch: master
     tags: true
