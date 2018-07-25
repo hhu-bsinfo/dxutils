@@ -28,7 +28,8 @@ jobs:
 deploy:
   provider: releases
   api_key: ${OAUTH_TOKEN}
-  file: build/libs/*.jar
+  file: build/libs/dxram-${TRAVIS_TAG}.jar
   on:
     repo: hhu-bsinfo/dxutils
     branch: development
+    tags: true
