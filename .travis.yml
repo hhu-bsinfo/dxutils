@@ -27,8 +27,7 @@ jobs:
 
 deploy:
   provider: releases
-  api_key:
-    secure: ${GITHUB_RELEASES_KEY}
+  api_key: ${OAUTH_TOKEN}
   file: build/libs/*.jar
   on:
     repo: hhu-bsinfo/dxutils
