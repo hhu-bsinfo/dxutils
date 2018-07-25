@@ -28,6 +28,7 @@ jobs:
 deploy:
   provider: releases
   api_key: ${OAUTH_TOKEN}
+  skip_cleanup: true
   file: build/libs/dxram-${TRAVIS_TAG}.jar
   on:
     repo: hhu-bsinfo/dxutils
