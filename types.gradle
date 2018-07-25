@@ -1,0 +1,10 @@
+buildTypes {
+    release {
+        buildConfig {
+            typedField "BUILD_TYPE", String, buildType
+            typedField "GIT_COMMIT", String, gitCommit
+            typedField "BUILD_USER", String, System.getProperty("user.name")
+            typedField "BUILD_DATE", String, currentDate
+        }
+    }
+}
