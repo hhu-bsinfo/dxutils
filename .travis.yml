@@ -10,17 +10,25 @@ addons:
     - g++-8
 
 stages:
-  - name: build
-  - name: snapshot
-    if: branch = development
-  - name: release
-    if: branch = master
+- name: build
+- name: snapshot
+  if: branch = none
+- name: release
+  if: branch = none
 
 jobs:
   include:
-    - stage: build
-      script: ./gradlew build
-    - stage: snapshot
-      script: ./gradlew artifactoryPublish --exclude-task test -Dsnapshot=true -Dbintray.user=${BINTRAY_USER} -Dbintray.key=${BINTRAY_KEY} -Dbuild.number=${TRAVIS_BUILD_NUMBER}
-    - stage: release
-      script: ./gradlew bintrayUpload --exclude-task test -Dbintray.user=${BINTRAY_USER} -Dbintray.key=${BINTRAY_KEY} -Dbuild.number=${TRAVIS_BUILD_NUMBER}
+  - stage: build
+    script: ./gradlew build
+  - stage: snapshot
+    script: ./gradlew artifactoryPublish --exclude-task test -Dsnapshot=true -Dbintray.user=${BINTRAY_USER} -Dbintray.key=${BINTRAY_KEY} -Dbuild.number=${TRAVIS_BUILD_NUMBER}
+  - stage: release
+    script: ./gradlew bintrayUpload --exclude-task test -Dbintray.user=${BINTRAY_USER} -Dbintray.key=${BINTRAY_KEY} -Dbuild.number=${TRAVIS_BUILD_NUMBER}
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ${GITHUB_RELEASES_KEY}
+  file: build/libs/*.jar
+  on:
+    repo: hhu-bsinfo/dxutils
