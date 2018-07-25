@@ -1,5 +1,4 @@
 # DXUtils: A collection of utility classes
-
 [![Build Status](https://travis-ci.org/hhu-bsinfo/dxutils.svg?branch=development)](https://travis-ci.org/hhu-bsinfo/dxutils)
 
 This repository provides a collection of utility classes for various projects of our group:
@@ -9,8 +8,11 @@ This repository provides a collection of utility classes for various projects of
 * [DXMem](https://github.com/hhu-bsinfo/dxmem/)
 * [DXMon](https://github.com/hhu-bsinfo/dxmon/)
 
-# License
+# Build Instructions
+If you want to use dxutils in another project, you can build it using the *build.sh* script. The build output is located
+in *build/dist*.
 
+# License
 Copyright (C) 2018 Heinrich-Heine-Universitaet Duesseldorf,
 Institute of Computer Science, Department Operating Systems. 
 Licensed under the [GNU General Public License](LICENSE.md).
