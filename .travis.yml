@@ -32,3 +32,4 @@ deploy:
   file: build/libs/*.jar
   on:
     repo: hhu-bsinfo/dxutils
+    branch: development
