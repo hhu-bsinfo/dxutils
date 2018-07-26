@@ -32,5 +32,5 @@ deploy:
   file: build/libs/dxutils-${TRAVIS_TAG}.jar
   on:
     repo: hhu-bsinfo/dxutils
-    branch: development
+    branch: master
     tags: true
