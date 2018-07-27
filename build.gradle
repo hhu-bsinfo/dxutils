@@ -23,8 +23,8 @@ buildscript {
 }
 
 plugins {
-    id 'java-library'
     id 'c'
+    id 'java-library'
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.4'
     id "com.jfrog.artifactory" version "4.7.5"
@@ -32,7 +32,7 @@ plugins {
 
 apply plugin: 'dxgradle'
 group = 'de.hhu.bsinfo'
-version = '0.3.1' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+version = '0.4.0' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
 
 mainClassName = 'none'
 
