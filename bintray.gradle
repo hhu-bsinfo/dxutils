@@ -15,9 +15,10 @@ bintray {
         labels = ['utilities']
         githubRepo = 'hhu-bsinfo/dxutils'
         //githubReleaseNotesFile = 'README.md'
+
         version {
             name = project.version
-            released  = new Date()
+            released = new Date()
         }
     }
 }
