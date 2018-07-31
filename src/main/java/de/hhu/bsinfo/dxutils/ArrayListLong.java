@@ -202,6 +202,19 @@ public class ArrayListLong implements Importable, Exportable {
     }
 
     /**
+     * Add a value to the front of the list
+     *
+     * @param p_val Value to add to the front
+     */
+    public void addFront(final long p_val) {
+        long[] tmp = new long[m_array.length + 1];
+        System.arraycopy(m_array, 0, tmp, 1, m_array.length);
+        tmp[0] = p_val;
+        m_array = tmp;
+        m_size++;
+    }
+
+    /**
      * Replaces the element at given index
      *
      * @param p_index
