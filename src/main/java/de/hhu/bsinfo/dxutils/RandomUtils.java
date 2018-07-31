@@ -16,6 +16,8 @@
 
 package de.hhu.bsinfo.dxutils;
 
+import java.util.Random;
+
 import de.hhu.bsinfo.dxutils.unit.StorageUnit;
 
 /**
@@ -94,5 +96,23 @@ public final class RandomUtils {
      */
     public static long getRandomValue(final long p_start, final long p_end) {
         return (long) (Math.random() * (p_end - p_start + 1) + p_start);
+    }
+
+    /**
+     * Create a random string from a given charset with a specific length
+     *
+     * @param p_charset Charset for random string. Multiple occurrences of the same char increase the probability
+     * @param p_length Length of the random output string
+     * @return Random output string
+     */
+    public static String getRandomString(final String p_charset, final int p_length) {
+        StringBuilder builder = new StringBuilder();
+        Random rand = new Random();
+
+        for (int i = 0; i < p_length; i++) {
+            builder.append(p_charset.charAt(rand.nextInt(p_length)));
+        }
+
+        return builder.toString();
     }
 }
