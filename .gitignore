@@ -19,3 +19,4 @@ out/*
 /app/
 /util/statistics.pdf
 /stats/
+*.iml
