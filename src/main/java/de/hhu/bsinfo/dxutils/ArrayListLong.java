@@ -183,7 +183,10 @@ public class ArrayListLong implements Importable, Exportable {
         }
 
         m_array[p_index] = p_val;
-        m_size++;
+
+        if (p_index > m_size) {
+            m_size = p_index + 1;
+        }
     }
 
     /**
