@@ -258,6 +258,19 @@ public class ArrayListLong implements Importable, Exportable {
         return oldValue;
     }
 
+    /**
+     * Trim the array, i.e. set the size to a lower value to drop the last elements
+     *
+     * @param p_size Size to trim to (must be < current size)
+     */
+    public void trim(final int p_size) {
+        if (p_size > m_size) {
+            throw new IllegalArgumentException("Cannot trim to size greater then " + m_size);
+        }
+
+        m_size = p_size;
+    }
+
     @Override
     public void exportObject(final Exporter p_exporter) {
         p_exporter.writeCompactNumber(m_size);
