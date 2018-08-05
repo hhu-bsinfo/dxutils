@@ -17,6 +17,7 @@
 package de.hhu.bsinfo.dxutils;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import de.hhu.bsinfo.dxutils.unit.StorageUnit;
 
@@ -69,7 +70,7 @@ public final class RandomUtils {
      * @return Random int
      */
     public static int getRandomValue(final int p_start, final int p_end) {
-        return (int) (Math.random() * (p_end - p_start + 1) + p_start);
+        return (int) (ThreadLocalRandom.current().nextDouble() * (p_end - p_start + 1) + p_start);
     }
 
     /**
@@ -82,7 +83,7 @@ public final class RandomUtils {
      * @return Random int
      */
     public static int getRandomValueExclEnd(final int p_start, final int p_end) {
-        return (int) (Math.random() * (p_end - p_start) + p_start);
+        return (int) (ThreadLocalRandom.current().nextDouble() * (p_end - p_start) + p_start);
     }
 
     /**
@@ -95,7 +96,7 @@ public final class RandomUtils {
      * @return Random int
      */
     public static long getRandomValue(final long p_start, final long p_end) {
-        return (long) (Math.random() * (p_end - p_start + 1) + p_start);
+        return (long) (ThreadLocalRandom.current().nextDouble() * (p_end - p_start + 1) + p_start);
     }
 
     /**
