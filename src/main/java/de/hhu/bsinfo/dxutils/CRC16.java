@@ -86,19 +86,31 @@ public final class CRC16 {
      * @return the crc16 hash
      */
     public static short continuousHash(final int p_seed) {
+
+        ms_hash = continuousHash(p_seed, ms_hash);
+
+        return ms_hash;
+    }
+
+    /**
+     * Returns the crc16 hash to given integer
+     *
+     * @param p_seed The integer that will be hashed
+     * @param p_oldValue The old hash value
+     * @return the crc16 hash
+     */
+    public static short continuousHash(final int p_seed, final short p_oldValue) {
         int crc;
         byte[] bytes;
 
-        crc = ms_hash;
+        crc = p_oldValue;
         bytes = new byte[] {(byte) (p_seed >>> 24), (byte) (p_seed >>> 16), (byte) (p_seed >>> 8), (byte) p_seed};
 
         for (byte b : bytes) {
             crc = crc >>> 8 ^ TABLE[(crc ^ b) & 0xff];
         }
 
-        ms_hash = (short) crc;
-
-        return ms_hash;
+        return (short) crc;
     }
 
     /**
