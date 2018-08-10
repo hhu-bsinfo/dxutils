@@ -204,7 +204,8 @@ public class ArrayListLong implements Importable, Exportable {
     /**
      * Add a value to the front of the list
      *
-     * @param p_val Value to add to the front
+     * @param p_val
+     *         Value to add to the front
      */
     public void addFront(final long p_val) {
         long[] tmp = new long[m_array.length + 1];
@@ -212,6 +213,54 @@ public class ArrayListLong implements Importable, Exportable {
         tmp[0] = p_val;
         m_array = tmp;
         m_size++;
+    }
+
+    /**
+     * Insert a value at the specified index. This shifts all elements including the one at the index back.
+     *
+     * @param p_index
+     *         Position in the array to insert the new value at
+     * @param p_val
+     *         Value to insert
+     */
+    public void insert(final int p_index, final long p_val) {
+        if (p_index > m_size) {
+            throw new ArrayIndexOutOfBoundsException(p_index);
+        }
+
+        long[] tmp = new long[m_size + 1];
+        System.arraycopy(m_array, 0, tmp, 0, p_index);
+
+        tmp[p_index] = p_val;
+
+        System.arraycopy(m_array, p_index, tmp, p_index + 1, m_size - p_index);
+
+        m_array = tmp;
+        m_size++;
+    }
+
+    /**
+     * Insert multiple values at the specified index. This shifts all elements including the one at the index back.
+     *
+     * @param p_index
+     *         Position in the array to insert the new values at
+     * @param p_vals
+     *         Values to insert
+     */
+    public void insert(final int p_index, final long... p_vals) {
+        if (p_index > m_size) {
+            throw new ArrayIndexOutOfBoundsException(p_index);
+        }
+
+        long[] tmp = new long[m_size + p_vals.length];
+        System.arraycopy(m_array, 0, tmp, 0, p_index);
+
+        System.arraycopy(p_vals, 0, tmp, p_index, p_vals.length);
+
+        System.arraycopy(m_array, p_index, tmp, p_index + p_vals.length, m_size - p_index);
+
+        m_array = tmp;
+        m_size += p_vals.length;
     }
 
     /**
@@ -261,7 +310,8 @@ public class ArrayListLong implements Importable, Exportable {
     /**
      * Trim the array, i.e. set the size to a lower value to drop the last elements
      *
-     * @param p_size Size to trim to (must be < current size)
+     * @param p_size
+     *         Size to trim to (must be < current size)
      */
     public void trim(final int p_size) {
         if (p_size > m_size) {
@@ -286,5 +336,22 @@ public class ArrayListLong implements Importable, Exportable {
     @Override
     public int sizeofObject() {
         return ObjectSizeUtil.sizeofCompactedNumber(m_size) + Long.BYTES * m_size;
+    }
+
+    @Override
+    public boolean equals(final Object p_object) {
+        if (p_object instanceof ArrayListLong) {
+            if (((ArrayListLong) p_object).m_size == m_size) {
+                for (int i = 0; i < m_size; i++) {
+                    if (((ArrayListLong) p_object).m_array[i] != m_array[i]) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
