@@ -142,4 +142,153 @@ public class ArrayListLongTest {
         Assert.assertEquals(0, list.get(5));
         Assert.assertEquals(13, list.get(6));
     }
+
+    @Test
+    public void insert() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.insert(0, 5);
+
+        Assert.assertEquals(5, list.get(0));
+        Assert.assertEquals(1, list.getSize());
+    }
+
+    @Test
+    public void insert2() {
+        ArrayListLong list = new ArrayListLong();
+
+        try {
+            list.insert(1, 5);
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            return;
+        }
+
+        Assert.fail("Exception expected");
+    }
+
+    @Test
+    public void insert3() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(1, 5);
+
+        Assert.assertEquals(1, list.get(0));
+        Assert.assertEquals(5, list.get(1));
+        Assert.assertEquals(2, list.get(2));
+        Assert.assertEquals(3, list.get(3));
+        Assert.assertEquals(4, list.getSize());
+    }
+
+    @Test
+    public void insert4() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(0, 5);
+
+        Assert.assertEquals(5, list.get(0));
+        Assert.assertEquals(1, list.get(1));
+        Assert.assertEquals(2, list.get(2));
+        Assert.assertEquals(3, list.get(3));
+        Assert.assertEquals(4, list.getSize());
+    }
+
+    @Test
+    public void insert5() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(2, 5);
+
+        Assert.assertEquals(1, list.get(0));
+        Assert.assertEquals(2, list.get(1));
+        Assert.assertEquals(5, list.get(2));
+        Assert.assertEquals(3, list.get(3));
+        Assert.assertEquals(4, list.getSize());
+    }
+
+    @Test
+    public void insert6() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(3, 5);
+
+        Assert.assertEquals(1, list.get(0));
+        Assert.assertEquals(2, list.get(1));
+        Assert.assertEquals(3, list.get(2));
+        Assert.assertEquals(5, list.get(3));
+        Assert.assertEquals(4, list.getSize());
+    }
+
+    @Test
+    public void insert7() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(3, 5, 6);
+
+        Assert.assertEquals(1, list.get(0));
+        Assert.assertEquals(2, list.get(1));
+        Assert.assertEquals(3, list.get(2));
+        Assert.assertEquals(5, list.get(3));
+        Assert.assertEquals(6, list.get(4));
+        Assert.assertEquals(5, list.getSize());
+    }
+
+    @Test
+    public void insert8() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(0, 5, 6);
+
+        Assert.assertEquals(5, list.get(0));
+        Assert.assertEquals(6, list.get(1));
+        Assert.assertEquals(1, list.get(2));
+        Assert.assertEquals(2, list.get(3));
+        Assert.assertEquals(3, list.get(4));
+        Assert.assertEquals(5, list.getSize());
+    }
+
+    @Test
+    public void insert9() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(2, 5, 6);
+
+        Assert.assertEquals(1, list.get(0));
+        Assert.assertEquals(2, list.get(1));
+        Assert.assertEquals(5, list.get(2));
+        Assert.assertEquals(6, list.get(3));
+        Assert.assertEquals(3, list.get(4));
+        Assert.assertEquals(5, list.getSize());
+    }
+
+    @Test
+    public void insert10() {
+        ArrayListLong list = new ArrayListLong();
+
+        list.insert(0, 5, 6);
+
+        Assert.assertEquals(5, list.get(0));
+        Assert.assertEquals(6, list.get(1));
+        Assert.assertEquals(2, list.getSize());
+    }
 }
