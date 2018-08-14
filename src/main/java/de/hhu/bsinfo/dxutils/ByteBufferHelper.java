@@ -76,6 +76,38 @@ public final class ByteBufferHelper {
     }
 
     /**
+     * Set the memory address of the array allocated on the native heap (outside of the JVM)
+     *
+     * @param p_buffer
+     *         DirectByteBuffer instance
+     * @param p_address
+     *         Native memory address to set
+     */
+    public static void setDirectAddress(final ByteBuffer p_buffer, final long p_address) {
+        try {
+            ms_byteBufferAddress.setLong(p_buffer, p_address);
+        } catch (final IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Set the capacity of the array allocated on the native heap (outside of the JVM)
+     *
+     * @param p_buffer
+     *         DirectByteBuffer instance
+     * @param p_capacity
+     *         Capacity to set
+     */
+    public static void setCapacity(final ByteBuffer p_buffer, final int p_capacity) {
+        try {
+            ms_byteBufferCapacity.setInt(p_buffer, p_capacity);
+        } catch (final IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Wrap a (unsafe) pointer
      *
      * @param p_addr
