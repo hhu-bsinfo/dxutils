@@ -1,4 +1,6 @@
 # DXUtils: A collection of utility classes
+
+[![Build Status](https://travis-ci.org/hhu-bsinfo/dxutils.svg?branch=master)](https://travis-ci.org/hhu-bsinfo/dxutils)
 [![Build Status](https://travis-ci.org/hhu-bsinfo/dxutils.svg?branch=development)](https://travis-ci.org/hhu-bsinfo/dxutils)
 
 This repository provides a collection of utility classes for various projects of our group:
