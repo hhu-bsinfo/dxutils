@@ -17,6 +17,7 @@
 package de.hhu.bsinfo.dxutils;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormatSymbols;
 import java.util.regex.Pattern;
 
 /**
@@ -26,6 +27,12 @@ import java.util.regex.Pattern;
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 31.03.2017
  */
 public final class StringUtils {
+
+    private static final DecimalFormatSymbols DECIMAL_SYMBOLS = DecimalFormatSymbols.getInstance();
+
+    public static final char MINUS_SIGN = DECIMAL_SYMBOLS.getMinusSign();
+
+    public static final String DECIMAL_SEPERATOR = Character.toString(DECIMAL_SYMBOLS.getDecimalSeparator());
 
     /**
      * Utils class
@@ -61,5 +68,23 @@ public final class StringUtils {
         phonyString = new String(p_array, "UTF-8");
 
         return p.matcher(phonyString).matches();
+    }
+
+    public static boolean isNumeric(final String p_value) {
+        String cleanedInput = p_value.replace(DECIMAL_SEPERATOR, "");
+
+        char firstChar = cleanedInput.charAt(0);
+        if (firstChar != MINUS_SIGN && !Character.isDigit(firstChar)) {
+            return false;
+        }
+
+        char[] characters = cleanedInput.substring(1).toCharArray();
+        for (char character : characters) {
+            if (!Character.isDigit(character)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
