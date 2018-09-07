@@ -28,9 +28,251 @@
         "m_isClient": false,
         "m_classConfig": "de.hhu.bsinfo.dxram.boot.ZookeeperBootComponentConfig"
       },
+      "BackupComponentConfig": {
+        "m_backupActive": false,
+        "m_availableForBackup": true,
+        "m_backupDirectory": "./log/",
+        "m_backupRangeSize": {
+          "m_value": 268435456,
+          "m_unit": "b"
+        },
+        "m_replicationFactor": 3,
+        "m_backupPlacementStrategy": "Random",
+        "m_disjunctiveFirstBackupPeer": true,
+        "m_rackAware": false,
+        "m_switchAware": false,
+        "m_classConfig": "de.hhu.bsinfo.dxram.backup.BackupComponentConfig"
+      },
+      "ChunkIndexComponentConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkIndexComponentConfig"
+      },
+      "LookupComponentConfig": {
+        "m_cachesEnabled": true,
+        "m_maxCacheEntries": 1000,
+        "m_cacheTtl": {
+          "m_value": 1000,
+          "m_unit": "ms"
+        },
+        "m_stabilizationBreakTime": {
+          "m_value": 1000,
+          "m_unit": "ms"
+        },
+        "m_classConfig": "de.hhu.bsinfo.dxram.lookup.LookupComponentConfig"
+      },
+      "ApplicationComponentConfig": {
+        "m_applicationPath": "dxapp",
+        "m_classConfig": "de.hhu.bsinfo.dxram.app.ApplicationComponentConfig"
+      },
+      "NullComponentConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.engine.NullComponentConfig"
+      },
+      "LogComponentConfig": {
+        "m_harddriveAccess": "raf",
+        "m_rawDevicePath": "/dev/raw/raw1",
+        "m_useChecksums": true,
+        "m_useTimestamps": true,
+        "m_flashPageSize": {
+          "m_value": 4096,
+          "m_unit": "b"
+        },
+        "m_logSegmentSize": {
+          "m_value": 8388608,
+          "m_unit": "b"
+        },
+        "m_primaryLogSize": {
+          "m_value": 268435456,
+          "m_unit": "b"
+        },
+        "m_writeBufferSize": {
+          "m_value": 33554432,
+          "m_unit": "b"
+        },
+        "m_secondaryLogBufferSize": {
+          "m_value": 131072,
+          "m_unit": "b"
+        },
+        "m_utilizationActivateReorganization": 60,
+        "m_utilizationPromptReorganization": 75,
+        "m_coldDataThresholdInSec": 9000,
+        "m_classConfig": "de.hhu.bsinfo.dxram.log.LogComponentConfig"
+      },
+      "ChunkComponentConfig": {
+        "m_keyValueStoreSize": {
+          "m_value": 134217728,
+          "m_unit": "b"
+        },
+        "m_memDumpFolderOnError": "",
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkComponentConfig"
+      },
+      "EventComponentConfig": {
+        "m_threadCount": 1,
+        "m_classConfig": "de.hhu.bsinfo.dxram.event.EventComponentConfig"
+      },
+      "JobWorkStealingComponentConfig": {
+        "m_numWorkers": 1,
+        "m_classConfig": "de.hhu.bsinfo.dxram.job.JobWorkStealingComponentConfig"
+      },
+      "NetworkComponentConfig": {
+        "m_coreConfig": {
+          "m_numMessageHandlerThreads": 2,
+          "m_requestMapSize": 1048576,
+          "m_useStaticExporterPool": true,
+          "m_benchmarkMode": false,
+          "m_device": "ethernet"
+        },
+        "m_nioConfig": {
+          "m_maxConnections": 100,
+          "m_requestTimeOut": {
+            "m_value": 333,
+            "m_unit": "ms"
+          },
+          "m_connectionTimeOut": {
+            "m_value": 333,
+            "m_unit": "ms"
+          },
+          "m_flowControlWindow": {
+            "m_value": 524288,
+            "m_unit": "b"
+          },
+          "m_flowControlWindowThreshold": 0.8,
+          "m_outgoingRingBufferSize": {
+            "m_value": 2097152,
+            "m_unit": "b"
+          }
+        },
+        "m_ibConfig": {
+          "m_maxConnections": 100,
+          "m_connectionCreationTimeout": {
+            "m_value": 5000,
+            "m_unit": "ms"
+          },
+          "m_requestTimeOut": {
+            "m_value": 100,
+            "m_unit": "ms"
+          },
+          "m_flowControlWindow": {
+            "m_value": 16777216,
+            "m_unit": "b"
+          },
+          "m_flowControlWindowThreshold": 0.1,
+          "m_outgoingRingBufferSize": {
+            "m_value": 4194304,
+            "m_unit": "b"
+          },
+          "m_ibqMaxCapacityBufferCount": 8192,
+          "m_ibqMaxCapacitySize": {
+            "m_value": 67108864,
+            "m_unit": "b"
+          },
+          "m_incomingBufferSize": {
+            "m_value": 32768,
+            "m_unit": "b"
+          },
+          "m_incomingBufferPoolTotalSize": {
+            "m_value": 2147483648,
+            "m_unit": "b"
+          },
+          "m_sqSize": 20,
+          "m_srqSize": 2000,
+          "m_sharedSCQSize": 2000,
+          "m_sharedRCQSize": 2000,
+          "m_maxSGEs": 4,
+          "m_enableSignalHandler": false,
+          "m_pinSendRecvThreads": false,
+          "m_statisticsThreadPrintIntervalMs": 0
+        },
+        "m_classConfig": "de.hhu.bsinfo.dxram.net.NetworkComponentConfig"
+      },
+      "ChunkMigrationComponentConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkMigrationComponentConfig"
+      },
+      "ChunkBackupComponentConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkBackupComponentConfig"
+      },
+      "NameserviceComponentConfig": {
+        "m_type": "NAME",
+        "m_nameserviceCacheEntries": 1000000,
+        "m_classConfig": "de.hhu.bsinfo.dxram.nameservice.NameserviceComponentConfig"
+      },
+      "FailureComponentConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.failure.FailureComponentConfig"
+      }
+    },
+    "m_serviceConfigs": {
+      "RecoveryServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.recovery.RecoveryServiceConfig"
+      },
+      "NullServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.engine.NullServiceConfig"
+      },
+      "NameserviceServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.nameservice.NameserviceServiceConfig"
+      },
+      "NetworkServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.net.NetworkServiceConfig"
+      },
+      "BootServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.boot.BootServiceConfig"
+      },
+      "ChunkDebugServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkDebugServiceConfig"
+      },
       "ApplicationServiceConfig": {
         "m_autoStart": [],
         "m_classConfig": "de.hhu.bsinfo.dxram.app.ApplicationServiceConfig"
+      },
+      "JobServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.job.JobServiceConfig"
+      },
+      "MigrationServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.migration.MigrationServiceConfig"
+      },
+      "LoggerServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.logger.LoggerServiceConfig"
+      },
+      "ChunkServiceConfig": {
+        "m_removerQueueSize": 100000,
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkServiceConfig"
+      },
+      "ChunkAnonServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkAnonServiceConfig"
+      },
+      "ChunkLocalServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.chunk.ChunkLocalServiceConfig"
+      },
+      "StatisticsServiceConfig": {
+        "m_printStatsPeriodMs": 0,
+        "m_classConfig": "de.hhu.bsinfo.dxram.stats.StatisticsServiceConfig"
+      },
+      "MonitoringServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.monitoring.MonitoringServiceConfig"
+      },
+      "LookupServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.lookup.LookupServiceConfig"
+      },
+      "SynchronizationServiceConfig": {
+        "m_maxBarriersPerSuperpeer": 1000,
+        "m_classConfig": "de.hhu.bsinfo.dxram.sync.SynchronizationServiceConfig"
+      },
+      "TemporaryStorageServiceConfig": {
+        "m_storageMaxNumEntries": 1000,
+        "m_storageMaxSize": {
+          "m_value": 33554432,
+          "m_unit": "b"
+        },
+        "m_classConfig": "de.hhu.bsinfo.dxram.tmp.TemporaryStorageServiceConfig"
+      },
+      "LogServiceConfig": {
+        "m_classConfig": "de.hhu.bsinfo.dxram.log.LogServiceConfig"
+      },
+      "MasterSlaveComputeServiceConfig": {
+        "m_role": "none",
+        "m_computeGroupId": 0,
+        "m_pingInterval": {
+          "m_value": 1000,
+          "m_unit": "ms"
+        },
+        "m_classConfig": "de.hhu.bsinfo.dxram.ms.MasterSlaveComputeServiceConfig"
       }
     }
   }

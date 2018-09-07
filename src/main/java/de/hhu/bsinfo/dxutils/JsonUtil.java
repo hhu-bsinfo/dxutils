@@ -19,12 +19,16 @@ package de.hhu.bsinfo.dxutils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JsonUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
 
     private static final Pattern INDEX_PATTERN = Pattern.compile("(\\S+)\\[(\\S+)\\]");
 
@@ -47,6 +51,11 @@ public class JsonUtil {
 
             // Split property name into tokens
             final String[] tokens = key.split("\\.");
+
+            if (tokens.length < 2) {
+                continue;
+            }
+
             final String[] jsonPath = Arrays.copyOfRange(tokens, 1, tokens.length - 1);
 
             // Traverse all tokens until the json object is found
@@ -66,6 +75,15 @@ public class JsonUtil {
                 } else {
                     element = element.getAsJsonObject().get(pathElement);
                 }
+
+                if (element == null) {
+                    break;
+                }
+            }
+
+            if (element == null) {
+                log.warn("Specified non-existent configuration key {}", String.join(".", jsonPath));
+                continue;
             }
 
             // Get key and value

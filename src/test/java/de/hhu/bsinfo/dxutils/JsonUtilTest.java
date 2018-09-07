@@ -61,14 +61,14 @@ public class JsonUtilTest {
         final String applicationClass = "de.hhu.bsinfo.Application";
         final int initOrderId = 42;
         Properties properties = new Properties();
-        properties.setProperty("dxram.m_config.m_componentConfigs[ApplicationServiceConfig].m_autoStart[0].m_className", applicationClass);
-        properties.setProperty("dxram.m_config.m_componentConfigs[ApplicationServiceConfig].m_autoStart[0].m_initOderId", String.valueOf(initOrderId));
+        properties.setProperty("dxram.m_config.m_serviceConfigs[ApplicationServiceConfig].m_autoStart[0].m_className", applicationClass);
+        properties.setProperty("dxram.m_config.m_serviceConfigs[ApplicationServiceConfig].m_autoStart[0].m_initOderId", String.valueOf(initOrderId));
 
         JsonUtil.override(element, properties, "dxram");
 
         JsonPrimitive className = element.getAsJsonObject()
                 .getAsJsonObject("m_config")
-                .getAsJsonObject("m_componentConfigs")
+                .getAsJsonObject("m_serviceConfigs")
                 .getAsJsonObject("ApplicationServiceConfig")
                 .getAsJsonArray("m_autoStart")
                 .get(0).getAsJsonObject()
@@ -76,7 +76,7 @@ public class JsonUtilTest {
 
         JsonPrimitive initId = element.getAsJsonObject()
                 .getAsJsonObject("m_config")
-                .getAsJsonObject("m_componentConfigs")
+                .getAsJsonObject("m_serviceConfigs")
                 .getAsJsonObject("ApplicationServiceConfig")
                 .getAsJsonArray("m_autoStart")
                 .get(0).getAsJsonObject()
