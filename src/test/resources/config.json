@@ -1,0 +1,37 @@
+{
+  "m_config": {
+    "m_engineConfig": {
+      "m_address": {
+        "m_ip": "127.0.0.1",
+        "m_port": 22222
+      },
+      "m_role": "Peer",
+      "m_jniPath": "jni"
+    },
+    "m_componentConfigs": {
+      "ZookeeperBootComponentConfig": {
+        "m_path": "/dxram",
+        "m_connection": {
+          "m_ip": "127.0.0.1",
+          "m_port": 2181
+        },
+        "m_timeout": {
+          "m_value": 10000,
+          "m_unit": "ms"
+        },
+        "m_bitfieldSize": {
+          "m_value": 2097152,
+          "m_unit": "b"
+        },
+        "m_rack": 0,
+        "m_switch": 0,
+        "m_isClient": false,
+        "m_classConfig": "de.hhu.bsinfo.dxram.boot.ZookeeperBootComponentConfig"
+      },
+      "ApplicationServiceConfig": {
+        "m_autoStart": [],
+        "m_classConfig": "de.hhu.bsinfo.dxram.app.ApplicationServiceConfig"
+      }
+    }
+  }
+}
