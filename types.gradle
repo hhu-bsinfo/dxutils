@@ -1,10 +1,22 @@
 buildVariants {
-    release {
+    debug {
         buildConfig {
             typedField "BUILD_TYPE", String, buildVariant
             typedField "GIT_COMMIT", String, gitCommit
             typedField "BUILD_USER", String, System.getProperty("user.name")
             typedField "BUILD_DATE", String, currentDate
+        }
+    }
+
+    release {
+        buildConfig {
+            inheritsFrom 'debug'
+        }
+    }
+
+    performance {
+        buildConfig {
+            inheritsFrom 'debug'
         }
     }
 }
