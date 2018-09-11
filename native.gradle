@@ -5,6 +5,15 @@ if (!Boolean.parseBoolean(project.nativeBuild)) {
 }
 
 model {
+
+    toolChains {
+        gcc(Gcc) {
+            eachPlatform {
+                linker.executable = "gcc"
+            }
+        }
+    }
+
     //noinspection GroovyAssignabilityCheck
     components {
         JNINativeCRCGenerator(NativeLibrarySpec) {
@@ -24,6 +33,7 @@ model {
             }
 
             binaries.all {
+                cCompiler.args << "-O2"
                 cCompiler.args << "-std=c99"
                 cCompiler.args << "-lz"
                 cCompiler.args << "-msse4.2"
@@ -47,6 +57,7 @@ model {
             }
 
             binaries.all {
+                cCompiler.args << "-O2"
                 cCompiler.args << "-std=c99"
             }
         }
@@ -68,6 +79,7 @@ model {
             }
 
             binaries.all {
+                cCompiler.args << "-O2"
                 cCompiler.args << "-std=c99"
             }
         }
@@ -89,6 +101,7 @@ model {
             }
 
             binaries.all {
+                cCompiler.args << "-O2"
                 cCompiler.args << "-std=c99"
             }
         }
