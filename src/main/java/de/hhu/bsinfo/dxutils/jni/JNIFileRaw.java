@@ -17,11 +17,26 @@
 package de.hhu.bsinfo.dxutils.jni;
 
 /**
- * Implementation for access to  raw-device for logging
+ * Implementation for access to raw device for logging.
  *
  * @author Christian Gesse <christian.gesse@hhu.de> 27.09.16
  */
 public final class JNIFileRaw {
+
+    /*
+     * Steps to prepare a raw device:
+     * 1) Use an empty partition
+     * 2) If executed in nspawn container: add "--capability=CAP_SYS_MODULE --bind-ro=/lib/modules" to systemd-nspawn
+     *      command in boot script
+     * 3) Get root access
+     * 4) mkdir /dev/raw
+     * 5) cd /dev/raw/
+     * 6) mknod raw1 c 162 1
+     * 7) modprobe raw
+     * 8) If /dev/raw/rawctl was not created: mknod /dev/raw/rawctl c 162 0
+     * 9) raw /dev/raw/raw1 /dev/*empty partition*
+     * 10) Execute DXRAM as root user (sudo -P for nfs)
+     */
 
     /**
      * Constructor
@@ -31,69 +46,44 @@ public final class JNIFileRaw {
     }
 
     /**
-     * returns a String with all names of the logs, seperated by \n
-     * this is needed because raw device cannot be scanned for files with File()
-     *
-     * @return String with all lognames seperated by \n
-     */
-    public static native String getFileList();
-
-    /**
-     * prepares the rawdevice for use as logging-device.
+     * Prepares the raw device for use as logging device.
      *
      * @param p_devicePath
-     *         Path to rawdevice-file(e.g. /dev/raw/raw1)
+     *         Path to raw device file (e.g., "/dev/raw/raw1")
      * @param p_mode
-     *         0 -> overwrite exisiting data, 1 -> check for old data and do not overwrite
-     * @return filedescriptor of rawdevice or -1 on error
+     *         0 -> overwrite existing data, 1 -> check for old data and do not overwrite
+     * @return file descriptor of raw device or -1 on error
      */
     public static native int prepareRawDevice(final String p_devicePath, final int p_mode);
 
     /**
-     * create a new log and create index entry
+     * Opens an existing log file or creates a new one.
      *
      * @param p_logName
      *         the filename (and only the name without path!) of the logfile
      * @param p_logSize
      *         the size of the log (in case of 0 it is an dynamically growing log, use  8MB then for a start)
-     * @return indexnumber of the first block of the logfile -> used as filedescriptor
+     * @return index of log file as descriptor and -1 if an error occurred
      */
-    public static native int createLog(final String p_logName, final long p_logSize);
+    public static native int open(final String p_logName, final long p_logSize);
 
     /**
-     * open an existing logfile
-     *
-     * @param p_logName
-     *         the filename (and only the name wothout path!) of the logfile
-     * @return index of logfile as descriptor and -1 if log was not found or error occured
-     */
-    public static native int openLog(final String p_logName);
-
-    /**
-     * closes an opened logfile
+     * Closes an opened log file.
      *
      * @param p_logID
      *         the ID of start index
      * @return 0 on success
      */
-    public static native int closeLog(final int p_logID);
+    public static native int close(final int p_logID);
 
     /**
-     * creates a new aligned buffer in native memory
+     * Deletes a log from index if it is not open.
      *
-     * @param p_bufSize:
-     *         length of buffer in bytes, must be a multiple of BLOCKSIZE
-     * @return address (pointer) of the created buffer or NULL
+     * @param p_fileID
+     *         the file descriptor
+     * @return 0 on success, -1 on error (log open or writing back index filed)
      */
-    public static native long createBuffer(final int p_bufSize);
-
-    /**
-     * frees a created native buffer
-     *
-     * @param p_bufPtr
-     *         address of the buffer, interpreted as a pointer
-     */
-    public static native void freeBuffer(final long p_bufPtr);
+    public static native int delete(final int p_fileID);
 
     /**
      * Appends the page-aligned buffer to the position in file. Buffer size must be a multiple integer of page size.
@@ -136,47 +126,24 @@ public final class JNIFileRaw {
             final long p_position);
 
     /**
-     * returns the allocated length of the file - warning: do not use as .length to achieve
-     * data pointer into dynamically growing files!
+     * Returns the length of the file.
      *
      * @param p_fileID
      *         file descriptor
-     * @return the allocated length of file described as above
+     * @return the length of the file
      */
     public static native long length(final int p_fileID);
 
     /**
-     * returns the last write position in a dynamically growing file -
-     * use to determine write position in Versionlogs
+     * Returns a String with all names of the logs, separated by '\n'.
+     * This is needed because raw device cannot be scanned for files with File().
      *
-     * @param p_fileID
-     *         file descriptor
-     * @return last write position (length) of file
+     * @return String with all log names separated by '\n'
      */
-    public static native long dlength(final int p_fileID);
+    public static native String getFileList();
 
     /**
-     * sets the write position (length) of a dynamically growing file - use in VersionLogs only
-     *
-     * @param p_fileID
-     *         the file descriptor
-     * @param p_fileLength
-     *         new length of file
-     * @return 0 on success, -1 on error
-     */
-    public static native int setDFileLength(final int p_fileID, final long p_fileLength);
-
-    /**
-     * deletes a log from index if it is not open
-     *
-     * @param p_fileID
-     *         the file descriptor
-     * @return 0 on success, -1 on error (log open or writing back index filed)
-     */
-    public static native int deleteLog(final int p_fileID);
-
-    /**
-     * prints all logs in index together with their indexnumber, size and name. Only for test use.
+     * Prints all logs in index together with their index number, size and name. Only for test use.
      */
     public static native void printIndexForTest();
 

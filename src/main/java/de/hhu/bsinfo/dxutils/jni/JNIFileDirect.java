@@ -17,7 +17,7 @@
 package de.hhu.bsinfo.dxutils.jni;
 
 /**
- * Implementation of JNI-Low-Level-Access to files with O_DIRECT Flag
+ * Implementation of JNI low-level access to files with O_DIRECT flag.
  *
  * @author Christian Gesse <christian.gesse@hhu.de> 17.09.16
  */
@@ -31,7 +31,7 @@ public final class JNIFileDirect {
     }
 
     /**
-     * Opens a new logfile or creates it if it doesnt exist
+     * Opens a new logfile or creates it if it does not exist
      *
      * @param p_path
      *         complete path to log including the filename
@@ -91,17 +91,6 @@ public final class JNIFileDirect {
      */
     public static native int read(final int p_fileID, final long p_data, final int p_offset, final int p_length,
             final long p_position);
-
-    /**
-     * Sets the filepointer to given value, measured from beginning of the file
-     *
-     * @param p_fileID:
-     *         the file descriptor
-     * @param p_position:
-     *         new position in file
-     * @return new position in file or -1 on errror
-     */
-    public static native long seek(final int p_fileID, final long p_position);
 
     /**
      * Return length of the file
