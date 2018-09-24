@@ -8,7 +8,7 @@ package de.hhu.bsinfo.dxutils.hashtable;
  */
 public final class HashTableElement<T> {
 
-    private final int m_key;
+    private final long m_key;
     private T m_value;
 
     /**
@@ -19,7 +19,7 @@ public final class HashTableElement<T> {
      * @param p_value
      *         the value
      */
-    HashTableElement(final int p_key, final T p_value) {
+    HashTableElement(final long p_key, final T p_value) {
         m_key = p_key;
         m_value = p_value;
     }
@@ -29,7 +29,7 @@ public final class HashTableElement<T> {
      *
      * @return the key
      */
-    public int getKey() {
+    public long getKey() {
         return m_key;
     }
 

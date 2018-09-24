@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Stores key-value tuples whereas keys are ints and values generic objects.
+ * Stores key-value tuples whereas keys are longs and values generic objects.
  *
  * @author Kevin Beineke, kevin.beineke@hhu.de, 26.02.2018
  */
@@ -134,7 +134,7 @@ public final class GenericHashTable<T> {
      *         the searched key
      * @return the value to which the key is mapped in GenericHashTable
      */
-    public T get(final int p_key) {
+    public T get(final long p_key) {
         T ret = null;
         HashTableElement<T> iter;
         int index;
@@ -160,7 +160,7 @@ public final class GenericHashTable<T> {
      * @param p_key
      *         the key
      */
-    public void put(final int p_key, final T p_value) {
+    public void put(final long p_key, final T p_value) {
         HashTableElement<T> iter;
         int index;
 
