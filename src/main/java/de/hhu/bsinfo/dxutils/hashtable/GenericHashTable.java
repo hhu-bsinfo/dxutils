@@ -16,6 +16,7 @@
 
 package de.hhu.bsinfo.dxutils.hashtable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +126,27 @@ public final class GenericHashTable<T> {
         }
 
         return m_list.subList(0, m_count);
+    }
+
+    /**
+     * Returns all values in a list.
+     *
+     * @param p_class
+     *         the class type of T because it is not available at runtime. Used to create an array of T.
+     * @return the list with all values.
+     */
+    public T[] values(final Class p_class) {
+        T[] ret = (T[]) Array.newInstance(p_class, m_count);
+
+        int count = 0;
+        for (int i = 0; i < m_elementCapacity; i++) {
+            HashTableElement<T> element = m_table[i];
+            if (element != null) {
+                ret[count++] = element.getValue();
+            }
+        }
+
+        return ret;
     }
 
     /**

@@ -590,12 +590,12 @@ JNIEXPORT jint JNICALL Java_de_hhu_bsinfo_dxutils_jni_JNIFileRaw_write(JNIEnv *e
             aligned_length -= written_bytes;
         }
     } else {
-        uint32_t start_index_entry = 0;       // index of part contsining aligned_start_pos
+        uint32_t start_index_entry = 0;       // index of part containing aligned_start_pos
         uint32_t end_index_entry = 0;         // index of part containing aligned_end_pos
         uint32_t length_at_begin = 0;         // in-file-offset of the beginning of the start_index-part
         uint32_t length_at_end = 0;           // in-file-offset of the beginning of the end_index-part
         uint32_t cur_ind = fileID;            // index to scan
-        uint32_t rem_length = aligned_length;   // length that is not placed in a part yet
+        uint32_t rem_length = aligned_length; // length that is not placed in a part yet
         uint32_t in_file_pos = 0;             // current position in file
         uint64_t start_index_write = 0;       // position to write changed index back
 
