@@ -303,7 +303,8 @@ public class LongIntHashTable {
      * @return the key
      */
     protected long getKey(final int p_index) {
-        return (long) m_table[p_index % m_elementCapacity * 3] << 32 | m_table[p_index % m_elementCapacity * 3 + 1];
+        return (long) m_table[p_index % m_elementCapacity * 3] << 32 |
+                m_table[p_index % m_elementCapacity * 3 + 1] & 0xFFFFFFFFL;
     }
 
     /**
@@ -339,7 +340,7 @@ public class LongIntHashTable {
 
         m_count = 0;
         while (index < oldElementCapacity) {
-            long key = (long) oldTable[index * 3] << 32 | oldTable[index * 3 + 1];
+            long key = (long) oldTable[index * 3] << 32 | oldTable[index * 3 + 1] & 0xFFFFFFFFL;
             if (key != 0) {
                 add(key, oldTable[index * 3 + 2]);
             }

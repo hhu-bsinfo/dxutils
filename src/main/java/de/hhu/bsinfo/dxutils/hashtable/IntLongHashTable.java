@@ -314,7 +314,8 @@ public class IntLongHashTable {
      * @return the value
      */
     protected long getValue(final int p_index) {
-        return (long) m_table[p_index % m_elementCapacity * 3 + 1] << 32 | m_table[p_index % m_elementCapacity * 3 + 2];
+        return (long) m_table[p_index % m_elementCapacity * 3 + 1] << 32 |
+                m_table[p_index % m_elementCapacity * 3 + 2] & 0xFFFFFFFFL;
     }
 
     /**
@@ -341,7 +342,7 @@ public class IntLongHashTable {
         while (index < oldElementCapacity) {
             int key = oldTable[index * 3];
             if (key != 0) {
-                add(key, (long) oldTable[index * 3 + 1] << 32 | oldTable[index * 3 + 2]);
+                add(key, (long) oldTable[index * 3 + 1] << 32 | oldTable[index * 3 + 2] & 0xFFFFFFFFL);
             }
             index = (index + 1) % m_elementCapacity;
         }
