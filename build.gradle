@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "de.hhu.bsinfo:dxbuild:0.2.0" + (Boolean.valueOf(System.getProperty('snapshot')) ? '-SNAPSHOT' : '')
+        classpath "de.hhu.bsinfo:dxbuild:0.2.0" + (Boolean.valueOf(System.getProperty('release')) ? '' : '-SNAPSHOT')
     }
 }
 
@@ -32,7 +32,7 @@ plugins {
 
 apply plugin: 'dxbuild'
 group = 'de.hhu.bsinfo'
-version = '0.5.0' + (Boolean.valueOf(System.getProperty('snapshot')) ? '-SNAPSHOT' : '')
+version = '0.5.0' + (Boolean.valueOf(System.getProperty('release')) ? '' : '-SNAPSHOT')
 
 mainClassName = 'none'
 
