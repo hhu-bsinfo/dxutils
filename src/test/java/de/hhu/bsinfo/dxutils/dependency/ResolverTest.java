@@ -25,12 +25,17 @@ import static org.junit.Assert.*;
 
 public class ResolverTest {
 
+    private static final String DEP_ONE = "dep1";
+    private static final String DEP_TWO = "dep2";
+    private static final String DEP_THREE = "dep3";
+    private static final String DEP_FOUR = "dep4";
+
     @Test
     public void resolve() throws CircularDependencyException {
-        Resolver.Node dep1 = new Resolver.Node("dep1");
-        Resolver.Node dep2 = new Resolver.Node("dep2");
-        Resolver.Node dep3 = new Resolver.Node("dep3");
-        Resolver.Node dep4 = new Resolver.Node("dep4");
+        Resolver.Node dep1 = new Resolver.Node(DEP_ONE);
+        Resolver.Node dep2 = new Resolver.Node(DEP_TWO);
+        Resolver.Node dep3 = new Resolver.Node(DEP_THREE);
+        Resolver.Node dep4 = new Resolver.Node(DEP_FOUR);
 
         /**
          * +----+     +----+     +----+     +----+
@@ -50,10 +55,10 @@ public class ResolverTest {
 
     @Test(expected = CircularDependencyException.class)
     public void resolveCircular() throws CircularDependencyException {
-        Resolver.Node dep1 = new Resolver.Node("dep1");
-        Resolver.Node dep2 = new Resolver.Node("dep2");
-        Resolver.Node dep3 = new Resolver.Node("dep3");
-        Resolver.Node dep4 = new Resolver.Node("dep4");
+        Resolver.Node dep1 = new Resolver.Node(DEP_ONE);
+        Resolver.Node dep2 = new Resolver.Node(DEP_TWO);
+        Resolver.Node dep3 = new Resolver.Node(DEP_THREE);
+        Resolver.Node dep4 = new Resolver.Node(DEP_FOUR);
 
         /**
          * +----+     +----+     +----+     +----+
