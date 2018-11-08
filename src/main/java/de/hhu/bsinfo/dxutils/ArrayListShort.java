@@ -183,7 +183,7 @@ public class ArrayListShort implements Importable, Exportable {
 
         m_array[p_index] = p_val;
 
-        if (p_index > m_size) {
+        if (p_index >= m_size) {
             m_size = p_index + 1;
         }
     }
