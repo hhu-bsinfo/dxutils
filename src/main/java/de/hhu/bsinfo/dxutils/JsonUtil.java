@@ -19,16 +19,16 @@ package de.hhu.bsinfo.dxutils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class JsonUtil {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
+public class JsonUtil {
+    private static final Logger LOGGER = LogManager.getFormatterLogger(JsonUtil.class);
 
     private static final Pattern INDEX_PATTERN = Pattern.compile("(\\S+)\\[(\\S+)\\]");
 
@@ -36,7 +36,8 @@ public class JsonUtil {
         override(p_root, p_properties, p_propertyKey, Collections.emptyList());
     }
 
-    public static void override(final JsonElement p_root, final Properties p_properties, final String p_propertyKey, final List<String> p_ignoredPrefixes) {
+    public static void override(final JsonElement p_root, final Properties p_properties, final String p_propertyKey,
+            final List<String> p_ignoredPrefixes) {
         Enumeration e = p_properties.propertyNames();
 
         while (e.hasMoreElements()) {
@@ -82,7 +83,7 @@ public class JsonUtil {
             }
 
             if (element == null) {
-                log.warn("Specified non-existent configuration key {}", String.join(".", jsonPath));
+                LOGGER.warn("Specified non-existent configuration key {}", String.join(".", jsonPath));
                 continue;
             }
 
@@ -96,12 +97,15 @@ public class JsonUtil {
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
                 // ip address
+                LOGGER.debug("Overriding (ip) %s with new value %s", jsonKey, jsonValue);
                 parent.addProperty(jsonKey, jsonValue);
             } else if (jsonValue.matches("[-+]?\\d*\\.?\\d+")) {
                 // numeric
+                LOGGER.debug("Overriding (num) %s with new value %d", jsonKey, Long.parseLong(jsonValue));
                 parent.addProperty(jsonKey, Long.parseLong(jsonValue));
             } else {
                 // string
+                LOGGER.debug("Overriding (str) %s with new value %s", jsonKey, jsonValue);
                 parent.addProperty(jsonKey, jsonValue);
             }
         }
