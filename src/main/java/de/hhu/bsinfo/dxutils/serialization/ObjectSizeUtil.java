@@ -106,6 +106,28 @@ public final class ObjectSizeUtil {
     }
 
     /**
+     * Get the serialization size for a full float array (including length field)
+     *
+     * @param p_arr
+     *         Array to get the full serialization size for
+     * @return Serialization size
+     */
+    public static int sizeofFloatArray(final float[] p_arr) {
+        return CompactNumber.getSizeOfNumber(p_arr.length) + p_arr.length * Float.BYTES;
+    }
+
+    /**
+     * Get the serialization size for a full double array (including length field)
+     *
+     * @param p_arr
+     *         Array to get the full serialization size for
+     * @return Serialization size
+     */
+    public static int sizeofDoubleArray(final double[] p_arr) {
+        return CompactNumber.getSizeOfNumber(p_arr.length) + p_arr.length * Double.BYTES;
+    }
+
+    /**
      * Get the serialization size for a full string (including length field)
      *
      * @param p_str
