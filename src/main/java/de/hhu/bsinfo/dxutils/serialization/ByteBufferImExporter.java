@@ -201,6 +201,16 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeFloats(final float[] p_array) {
+        return writeFloats(p_array, 0, p_array.length);
+    }
+
+    @Override
+    public int writeDoubles(final double[] p_array) {
+        return writeDoubles(p_array, 0, p_array.length);
+    }
+
+    @Override
     public int writeShorts(final short[] p_array, final int p_offset, final int p_length) {
         for (int i = 0; i < p_length; i++) {
             m_byteBuffer.putShort(p_array[p_offset + i]);
@@ -237,6 +247,24 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeFloats(final float[] p_array, final int p_offset, final int p_length) {
+        for (int i = 0; i < p_length; i++) {
+            m_byteBuffer.putFloat(p_array[p_offset + i]);
+        }
+
+        return p_length;
+    }
+
+    @Override
+    public int writeDoubles(final double[] p_array, final int p_offset, final int p_length) {
+        for (int i = 0; i < p_length; i++) {
+            m_byteBuffer.putDouble(p_array[p_offset + i]);
+        }
+
+        return p_length;
+    }
+
+    @Override
     public void writeByteArray(final byte[] p_array) {
         writeCompactNumber(p_array.length);
         writeBytes(p_array);
@@ -267,6 +295,18 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public void writeFloatArray(final float[] p_array) {
+        writeCompactNumber(p_array.length);
+        writeFloats(p_array);
+    }
+
+    @Override
+    public void writeDoubleArray(final double[] p_array) {
+        writeCompactNumber(p_array.length);
+        writeDoubles(p_array);
+    }
+
+    @Override
     public int readShorts(final short[] p_array) {
         return readShorts(p_array, 0, p_array.length);
     }
@@ -284,6 +324,16 @@ public class ByteBufferImExporter implements Importer, Exporter {
     @Override
     public int readLongs(final long[] p_array) {
         return readLongs(p_array, 0, p_array.length);
+    }
+
+    @Override
+    public int readFloats(final float[] p_array) {
+        return writeFloats(p_array, 0, p_array.length);
+    }
+
+    @Override
+    public int readDoubles(final double[] p_array) {
+        return writeDoubles(p_array, 0, p_array.length);
     }
 
     @Override
@@ -323,6 +373,24 @@ public class ByteBufferImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int readFloats(final float[] p_array, final int p_offset, final int p_length) {
+        for (int i = 0; i < p_length; i++) {
+            p_array[p_offset + i] = m_byteBuffer.getFloat();
+        }
+
+        return p_length;
+    }
+
+    @Override
+    public int readDoubles(double[] p_array, int p_offset, int p_length) {
+        for (int i = 0; i < p_length; i++) {
+            p_array[p_offset + i] = m_byteBuffer.getDouble();
+        }
+
+        return p_length;
+    }
+
+    @Override
     public byte[] readByteArray(final byte[] p_array) {
         byte[] arr = new byte[readCompactNumber(0)];
         readBytes(arr);
@@ -354,6 +422,20 @@ public class ByteBufferImExporter implements Importer, Exporter {
     public long[] readLongArray(final long[] p_array) {
         long[] arr = new long[readCompactNumber(0)];
         readLongs(arr);
+        return arr;
+    }
+
+    @Override
+    public float[] readFloatArray(final float[] p_array) {
+        float[] arr = new float[readCompactNumber(0)];
+        readFloats(arr);
+        return arr;
+    }
+
+    @Override
+    public double[] readDoubleArray(final double[] p_array) {
+        double[] arr = new double[readCompactNumber(0)];
+        readDoubles(arr);
         return arr;
     }
 }

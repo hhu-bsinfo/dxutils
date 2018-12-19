@@ -143,7 +143,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
-    public void writeCompactNumber(int p_v) {
+    public void writeCompactNumber(final int p_v) {
         byte[] number = CompactNumber.compact(p_v);
         writeBytes(number);
     }
@@ -216,6 +216,32 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeFloats(final float[] p_array) {
+        try {
+            for (int i = 0; i < p_array.length; i++) {
+                m_file.writeFloat(p_array[i]);
+            }
+
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int writeDoubles(final double[] p_array) {
+        try {
+            for (int i = 0; i < p_array.length; i++) {
+                m_file.writeDouble(p_array[i]);
+            }
+
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int writeBytes(final byte[] p_array, final int p_offset, final int p_length) {
         try {
             m_file.write(p_array, p_offset, p_length);
@@ -278,6 +304,32 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int writeFloats(final float[] p_array, final int p_offset, final int p_length) {
+        try {
+            for (int i = p_offset; i < p_length; i++) {
+                m_file.writeFloat(p_array[i]);
+            }
+
+            return p_length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int writeDoubles(final double[] p_array, final int p_offset, final int p_length) {
+        try {
+            for (int i = p_offset; i < p_length; i++) {
+                m_file.writeDouble(p_array[i]);
+            }
+
+            return p_length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void writeByteArray(final byte[] p_array) {
         writeCompactNumber(p_array.length);
         writeBytes(p_array);
@@ -305,6 +357,18 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     public void writeLongArray(final long[] p_array) {
         writeCompactNumber(p_array.length);
         writeLongs(p_array);
+    }
+
+    @Override
+    public void writeFloatArray(final float[] p_array) {
+        writeCompactNumber(p_array.length);
+        writeFloats(p_array);
+    }
+
+    @Override
+    public void writeDoubleArray(final double[] p_array) {
+        writeCompactNumber(p_array.length);
+        writeDoubles(p_array);
     }
 
     @Override
@@ -385,7 +449,7 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
-    public int readCompactNumber(int p_int) {
+    public int readCompactNumber(final int p_int) {
         byte[] tmp = new byte[4];
         int i;
 
@@ -466,6 +530,32 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int readFloats(final float[] p_array) {
+        try {
+            for (int i = 0; i < p_array.length; i++) {
+                p_array[i] = m_file.readFloat();
+            }
+
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int readDoubles(final double[] p_array) {
+        try {
+            for (int i = 0; i < p_array.length; i++) {
+                p_array[i] = m_file.readDouble();
+            }
+
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int readBytes(final byte[] p_array, final int p_offset, final int p_length) {
         try {
             return m_file.read(p_array, p_offset, p_length);
@@ -527,6 +617,32 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     }
 
     @Override
+    public int readFloats(final float[] p_array, final int p_offset, final int p_length) {
+        try {
+            for (int i = p_offset; i < p_length; i++) {
+                p_array[i] = m_file.readFloat();
+            }
+
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int readDoubles(final double[] p_array, final int p_offset, final int p_length) {
+        try {
+            for (int i = p_offset; i < p_length; i++) {
+                p_array[i] = m_file.readDouble();
+            }
+
+            return p_array.length;
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public byte[] readByteArray(final byte[] p_array) {
         byte[] arr = new byte[readCompactNumber(0)];
         readBytes(arr);
@@ -558,6 +674,20 @@ public class RandomAccessFileImExporter implements Importer, Exporter {
     public long[] readLongArray(final long[] p_array) {
         long[] arr = new long[readCompactNumber(0)];
         readLongs(arr);
+        return arr;
+    }
+
+    @Override
+    public float[] readFloatArray(final float[] p_array) {
+        float[] arr = new float[readCompactNumber(0)];
+        readFloats(arr);
+        return arr;
+    }
+
+    @Override
+    public double[] readDoubleArray(final double[] p_array) {
+        double[] arr = new double[readCompactNumber(0)];
+        readDoubles(arr);
         return arr;
     }
 }
