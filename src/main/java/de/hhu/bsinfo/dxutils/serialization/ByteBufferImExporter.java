@@ -328,12 +328,12 @@ public class ByteBufferImExporter implements Importer, Exporter {
 
     @Override
     public int readFloats(final float[] p_array) {
-        return writeFloats(p_array, 0, p_array.length);
+        return readFloats(p_array, 0, p_array.length);
     }
 
     @Override
     public int readDoubles(final double[] p_array) {
-        return writeDoubles(p_array, 0, p_array.length);
+        return readDoubles(p_array, 0, p_array.length);
     }
 
     @Override
