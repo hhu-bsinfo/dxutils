@@ -194,6 +194,28 @@ public interface Exporter {
     int writeLongs(final long[] p_array);
 
     /**
+     * Write a float array to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_array
+     *         Array to write.
+     * @return Number of written elements.
+     */
+    int writeFloats(final float[] p_array);
+
+    /**
+     * Write a double array to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_array
+     *         Array to write.
+     * @return Number of written elements.
+     */
+    int writeDoubles(final double[] p_array);
+
+    /**
      * Write a byte array to the target.
      * Use this call in your exportable object in the
      * export call to write data to the target.
@@ -269,6 +291,36 @@ public interface Exporter {
     int writeLongs(final long[] p_array, final int p_offset, final int p_length);
 
     /**
+     * Write a float array to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_array
+     *         Array to write.
+     * @param p_offset
+     *         Offset to start writing from.
+     * @param p_length
+     *         Number of elements to write.
+     * @return Number of written elements.
+     */
+    int writeFloats(final float[] p_array, final int p_offset, final int p_length);
+
+    /**
+     * Write a double array to the target.
+     * Use this call in your exportable object in the
+     * export call to write data to the target.
+     *
+     * @param p_array
+     *         Array to write.
+     * @param p_offset
+     *         Offset to start writing from.
+     * @param p_length
+     *         Number of elements to write.
+     * @return Number of written elements.
+     */
+    int writeDoubles(final double[] p_array, final int p_offset, final int p_length);
+
+    /**
      * Write a byte array to the target.
      * The array must be written as a self containing object,
      * i.e. with length information
@@ -317,4 +369,24 @@ public interface Exporter {
      *         Array to write
      */
     void writeLongArray(final long[] p_array);
+
+    /**
+     * Write a float array to the target.
+     * The array must be written as a self containing object,
+     * i.e. with length information
+     *
+     * @param p_array
+     *         Array to write
+     */
+    void writeFloatArray(final float[] p_array);
+
+    /**
+     * Write a double array to the target.
+     * The array must be written as a self containing object,
+     * i.e. with length information
+     *
+     * @param p_array
+     *         Array to write
+     */
+    void writeDoubleArray(final double[] p_array);
 }
