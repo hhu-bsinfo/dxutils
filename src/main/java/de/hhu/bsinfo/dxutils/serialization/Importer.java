@@ -46,7 +46,7 @@ public interface Importer {
      *
      * @return Boolean read.
      */
-    boolean readBoolean(boolean p_bool);
+    boolean readBoolean(final boolean p_bool);
 
     /**
      * Read a single byte from the target.
@@ -55,7 +55,7 @@ public interface Importer {
      *
      * @return Byte read.
      */
-    byte readByte(byte p_byte);
+    byte readByte(final byte p_byte);
 
     /**
      * Read a short from the target.
@@ -64,7 +64,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    short readShort(short p_short);
+    short readShort(final short p_short);
 
     /**
      * Read a char from the target.
@@ -73,7 +73,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    char readChar(char p_char);
+    char readChar(final char p_char);
 
     /**
      * Read an int from the target.
@@ -82,7 +82,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    int readInt(int p_int);
+    int readInt(final int p_int);
 
     /**
      * Read a long from the target.
@@ -91,7 +91,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    long readLong(long p_long);
+    long readLong(final long p_long);
 
     /**
      * Read a float from the target.
@@ -100,7 +100,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    float readFloat(float p_float);
+    float readFloat(final float p_float);
 
     /**
      * Read a double from the target.
@@ -109,7 +109,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    double readDouble(double p_double);
+    double readDouble(final double p_double);
 
     /**
      * Read a compact number from the target. A compact number might be 1, 2, 3 or 4 bytes.
@@ -118,7 +118,7 @@ public interface Importer {
      *
      * @return Value read.
      */
-    int readCompactNumber(int p_int);
+    int readCompactNumber(final int p_int);
 
     /**
      * Read a String from the target.
@@ -127,7 +127,7 @@ public interface Importer {
      *
      * @return String read.
      */
-    String readString(String p_string);
+    String readString(final String p_string);
 
     /**
      * Read data into a byte array from target.
@@ -183,6 +183,28 @@ public interface Importer {
      * @return Number of longs read;
      */
     int readLongs(final long[] p_array);
+
+    /**
+     * Read data into a float array from target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @param p_array
+     *         Array to read into.
+     * @return Number of floats read;
+     */
+    int readFloats(final float[] p_array);
+
+    /**
+     * Read data into a double array from target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @param p_array
+     *         Array to read into.
+     * @return Number of doubles read;
+     */
+    int readDoubles(final double[] p_array);
 
     /**
      * Read data into a byte array from target.
@@ -260,13 +282,43 @@ public interface Importer {
     int readLongs(final long[] p_array, final int p_offset, final int p_length);
 
     /**
+     * Read data into a float array from target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @param p_array
+     *         Array to read into.
+     * @param p_offset
+     *         Offset to start in the array for reading into.
+     * @param p_length
+     *         Number of floats to read.
+     * @return Number of floats read.
+     */
+    int readFloats(final float[] p_array, final int p_offset, final int p_length);
+
+    /**
+     * Read data into a double array from target.
+     * Use this call in your importable object in the
+     * import call to read data from the target.
+     *
+     * @param p_array
+     *         Array to read into.
+     * @param p_offset
+     *         Offset to start in the array for reading into.
+     * @param p_length
+     *         Number of doubles to read.
+     * @return Number of doubles read.
+     */
+    int readDoubles(final double[] p_array, final int p_offset, final int p_length);
+
+    /**
      * Read a byte array from the target.
      * The array to be read must be stored as self containing object,
      * i.e. with length information
      *
      * @return New array with data read.
      */
-    byte[] readByteArray(byte[] p_array);
+    byte[] readByteArray(final byte[] p_array);
 
     /**
      * Read a short array from the target.
@@ -275,7 +327,7 @@ public interface Importer {
      *
      * @return New array with data read.
      */
-    short[] readShortArray(short[] p_array);
+    short[] readShortArray(final short[] p_array);
 
     /**
      * Read a char array from the target.
@@ -284,7 +336,7 @@ public interface Importer {
      *
      * @return New array with data read.
      */
-    char[] readCharArray(char[] p_array);
+    char[] readCharArray(final char[] p_array);
 
     /**
      * Read an int array from the target.
@@ -293,7 +345,7 @@ public interface Importer {
      *
      * @return New array with data read.
      */
-    int[] readIntArray(int[] p_array);
+    int[] readIntArray(final int[] p_array);
 
     /**
      * Read a long array from the target.
@@ -302,6 +354,23 @@ public interface Importer {
      *
      * @return New array with data read.
      */
-    long[] readLongArray(long[] p_array);
+    long[] readLongArray(final long[] p_array);
 
+    /**
+     * Read a float array from the target.
+     * The array to be read must be stored as self containing object,
+     * i.e. with length information
+     *
+     * @return New array with data read.
+     */
+    float[] readFloatArray(final float[] p_array);
+
+    /**
+     * Read a double array from the target.
+     * The array to be read must be stored as self containing object,
+     * i.e. with length information
+     *
+     * @return New array with data read.
+     */
+    double[] readDoubleArray(final double[] p_array);
 }
