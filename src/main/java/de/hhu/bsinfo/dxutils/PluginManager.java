@@ -20,9 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,14 +30,24 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
 
+import de.hhu.bsinfo.dxutils.loader.JarClassLoader;
+
 /**
  * Load classes from jar files during runtime to implement plugins.
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 18.02.2019
  */
 public class PluginManager {
-    private final File m_pluginDirectory;
-    private URLClassLoader m_classLoader;
+
+    /**
+     * The plugin manager's base directory.
+     */
+    private final Path m_pluginPath;
+
+    /**
+     * The plugin manager's class loader.
+     */
+    private final JarClassLoader m_classLoader;
 
     /**
      * Constructor
@@ -48,13 +58,8 @@ public class PluginManager {
      *         If plugin folder does not exist or is not a directory.
      */
     public PluginManager(final String p_path) throws FileNotFoundException {
-        m_pluginDirectory = new File(p_path);
-
-        if (m_pluginDirectory.exists() && m_pluginDirectory.isDirectory()) {
-            load();
-        } else {
-            throw new FileNotFoundException("Path '" + m_pluginDirectory + "' does not exist or is no directory.");
-        }
+        m_pluginPath = Paths.get(p_path);
+        m_classLoader = new JarClassLoader(m_pluginPath);
     }
 
     /**
@@ -77,6 +82,15 @@ public class PluginManager {
      */
     public Class getClassByName(final String p_fullyQualifiedName) throws ClassNotFoundException {
         return Class.forName(p_fullyQualifiedName, true, m_classLoader);
+    }
+
+    /**
+     * Registers a new plugin (jar archive) within the plugin manager.
+     *
+     * @param p_pluginPath The jar archive's path.
+     */
+    public void add(final Path p_pluginPath) {
+        m_classLoader.add(p_pluginPath);
     }
 
     /**
@@ -124,29 +138,6 @@ public class PluginManager {
         }
 
         return classes;
-    }
-
-    /**
-     * Load the plugins
-     */
-    private void load() {
-        File[] files = m_pluginDirectory.listFiles();
-
-        assert files != null;
-
-        ArrayList<URL> list = new ArrayList<>();
-
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().endsWith(".jar")) {
-                try {
-                    list.add(files[i].toURI().toURL());
-                } catch (final MalformedURLException e) {
-                    throw new IllegalStateException(e);
-                }
-            }
-        }
-
-        m_classLoader = new URLClassLoader(list.toArray(new URL[0]), ClassLoader.getSystemClassLoader());
     }
 
     /**
