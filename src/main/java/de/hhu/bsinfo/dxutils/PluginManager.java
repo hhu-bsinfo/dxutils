@@ -103,10 +103,19 @@ public class PluginManager {
      * @return List of sub-classes.
      */
     public <T> List<Class<? extends T>> getAllSubClasses(final Class p_class) {
+        return getAllSubClasses(p_class, null);
+    }
+
+    public <T> List<Class<? extends T>> getAllSubClasses(final Class p_class, final String p_archiveName) {
         List<Class<? extends T>> classes = new ArrayList<>();
 
         try {
             for (URL url : m_classLoader.getURLs()) {
+
+                if (p_archiveName != null && !url.toString().endsWith(p_archiveName)) {
+                    continue;
+                }
+
                 File jarFile = new File(url.getFile());
 
                 JarInputStream jarIs = new JarInputStream(new FileInputStream(jarFile));
