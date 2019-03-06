@@ -5,15 +5,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Filip Krakowski, filip.krakowski@uni-duesseldorf.de, 05.03.2019
  */
 public class JarClassLoader extends URLClassLoader {
 
-    private static final String JAR_EXTENSION = ".jar";
+    private static final Logger LOGGER = LogManager.getFormatterLogger(JarClassLoader.class);
+
+    private static final String JAR_SUFFIX = ".jar";
 
     /**
      * The base directory to search within for jar archives.
@@ -45,7 +52,7 @@ public class JarClassLoader extends URLClassLoader {
         try {
             Files.list(m_baseDir).forEach(this::add);
         } catch (IOException e) {
-            //ignored
+            LOGGER.warn("Couldn't load plugins", e);
         }
     }
 
@@ -55,14 +62,15 @@ public class JarClassLoader extends URLClassLoader {
      * @param p_path The jar file's path.
      */
     public void add(final Path p_path) {
-        if (!p_path.endsWith(JAR_EXTENSION)) {
+        if (!p_path.toString().endsWith(JAR_SUFFIX)) {
+            LOGGER.warn("%s is not a java archive", p_path);
             return;
         }
 
         try {
             addURL(p_path.toUri().toURL());
         } catch (MalformedURLException e) {
-            // ignored
+            LOGGER.warn("Could not add the specified jar file", e);
         }
     }
 }

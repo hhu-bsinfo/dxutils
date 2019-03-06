@@ -112,6 +112,8 @@ public class PluginManager {
         try {
             for (URL url : m_classLoader.getURLs()) {
 
+                System.out.println(url);
+
                 if (p_archiveName != null && !url.toString().endsWith(p_archiveName)) {
                     continue;
                 }
