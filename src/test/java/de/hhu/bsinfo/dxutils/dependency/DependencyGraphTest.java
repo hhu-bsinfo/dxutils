@@ -32,26 +32,69 @@ public class DependencyGraphTest {
     private static final String DEP_FOUR = "dep4";
 
     @Test
-    public void testGraph() throws CircularDependencyException {
-        DependencyGraph graph = new DependencyGraph();
+    public void stringTest() throws CircularDependencyException {
+        DependencyGraph<String> graph = new DependencyGraph<>();
 
-        graph.addNode(DEP_ONE);
-        graph.addNode(DEP_TWO);
-        graph.addNode(DEP_THREE);
-        graph.addNode(DEP_FOUR);
+        graph.add(DEP_ONE, DEP_FOUR);
+        graph.add(DEP_TWO, DEP_THREE);
+        graph.add(DEP_FOUR, DEP_THREE);
 
-        graph.addEdge(DEP_ONE, DEP_FOUR);
-        graph.addEdge(DEP_TWO, DEP_THREE);
-        graph.addEdge(DEP_FOUR, DEP_THREE);
-
-        List<String> actual = Resolver.resolve(graph.getNode(DEP_ONE))
-                .stream()
-                .map(Resolver.Node::getId)
-                .collect(Collectors.toList());
+        List<String> actual = graph.resolve(DEP_ONE);
 
         List<String> expected = Arrays.asList(DEP_THREE, DEP_FOUR, DEP_ONE);
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void integerTest() throws CircularDependencyException {
+        DependencyGraph<Integer> graph = new DependencyGraph<>();
+
+        graph.add(0, 1, 2, 3, 4);
+        graph.add(1, 2, 3, 4);
+        graph.add(2, 3, 4);
+        graph.add(3, 4);
+
+        List<Integer> actual = graph.resolve(0);
+
+        List<Integer> expected = Arrays.asList(4, 3, 2, 1, 0);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test(expected = CircularDependencyException.class)
+    public void circularTest() throws CircularDependencyException {
+        DependencyGraph<Integer> graph = new DependencyGraph<>();
+
+        graph.add(0, 1, 2);
+        graph.add(2, 0);
+
+        List<Integer> actual = graph.resolve(0);
+
+        fail();
+    }
+
+    @Test
+    public void classTest() throws CircularDependencyException {
+        DependencyGraph<Class> graph = new DependencyGraph<>();
+
+        graph.add(A.class, E.class, D.class);
+        graph.add(B.class, A.class, E.class);
+        graph.add(D.class, C.class);
+        graph.add(E.class, F.class);
+
+        List<Class> actual = graph.resolve(B.class);
+
+        List<Class> expected = Arrays.asList(C.class, D.class, F.class, E.class, A.class, B.class);
+
+        assertEquals(expected, actual);
+    }
+
+    private static class A {}
+    private static class B {}
+    private static class C {}
+    private static class D {}
+    private static class E {}
+    private static class F {}
 
 }

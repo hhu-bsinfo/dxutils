@@ -19,35 +19,72 @@ package de.hhu.bsinfo.dxutils.dependency;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class DependencyGraph {
+public class DependencyGraph<T> {
 
-    private final Map<String, Resolver.Node> m_nodeMap;
+    private final Map<T, Node<T>> m_nodes = new HashMap<>();
 
-    public DependencyGraph() {
-        m_nodeMap = new HashMap<>();
+    @SafeVarargs
+    public final void add(final @NotNull T p_dependent, final T... p_dependencies) {
+        Node<T> from = putIfAbsent(p_dependent);
+        Arrays.stream(p_dependencies)
+                .filter(Objects::nonNull)
+                .forEach(to -> addEdge(from, to));
     }
 
-    public void addNode(final @NotNull String p_id) {
-        if (m_nodeMap.containsKey(p_id)) {
-            return;
+    private void addEdge(final @NotNull Node<T> p_from, final @NotNull T p_to) {
+        p_from.addEdge(putIfAbsent(p_to));
+    }
+
+    private Node<T> putIfAbsent(final @NotNull T p_element) {
+        if (!m_nodes.containsKey(p_element)) {
+            Node<T> node = new Node<>(p_element);
+            m_nodes.put(p_element, node);
+            return node;
         }
 
-        m_nodeMap.put(p_id, new Resolver.Node(p_id));
+        return m_nodes.get(p_element);
     }
 
-    public void addEdge(final @NotNull String p_from, final @NotNull String p_to) {
-        if (!m_nodeMap.containsKey(p_from) || !m_nodeMap.containsKey(p_to)) {
-            return;
+    /**
+     * Determines the order in which dependencies must be loaded.
+     *
+     * @param p_root The root node.
+     * @return An ordered list containing the dependencies to load.
+     * @throws CircularDependencyException If a circular dependency was detected.
+     */
+    public List<T> resolve(final @NotNull T p_root) throws CircularDependencyException {
+        Node<T> root = m_nodes.get(p_root);
+        if (root == null) {
+            return Collections.emptyList();
         }
 
-        m_nodeMap.get(p_from).addEdge(m_nodeMap.get(p_to));
+        List<Node> resolved = new ArrayList<>();
+        Set<Node> seen = new HashSet<>();
+
+        resolve(root, resolved, seen);
+
+        return resolved.stream().map(Node<T>::getIdentifier).collect(Collectors.toList());
     }
 
-    @Nullable
-    public Resolver.Node getNode(final @NotNull String p_id) {
-        return m_nodeMap.get(p_id);
+    private static <T> void resolve(final @NotNull Node<T> p_root, final @NotNull List<Node> p_resolved, final @NotNull Set<Node> p_seen) throws CircularDependencyException {
+        p_seen.add(p_root);
+        for (Node<T> node : p_root.getEdges()) {
+            // Check if this node was already resolved
+            if (p_resolved.contains(node)) {
+                continue;
+            }
+
+            // Check if this node was already seen to prevent circular dependencies
+            if (p_seen.contains(node)) {
+                throw new CircularDependencyException(String.format("Circular dependency between %s and %s detected", p_root.getIdentifier(), node.getIdentifier()));
+            }
+
+            resolve(node, p_resolved, p_seen);
+        }
+        p_resolved.add(p_root);
     }
 }
