@@ -49,6 +49,12 @@ public class DependencyGraph<T> {
         return m_nodes.get(p_element);
     }
 
+    public List<T> values() {
+        return m_nodes.values().stream()
+                .map(Node::getIdentifier)
+                .collect(Collectors.toList());
+    }
+
     /**
      * Determines the order in which dependencies must be loaded.
      *
@@ -67,7 +73,9 @@ public class DependencyGraph<T> {
 
         resolve(root, resolved, seen);
 
-        return resolved.stream().map(Node<T>::getIdentifier).collect(Collectors.toList());
+        return resolved.stream()
+                .map(Node<T>::getIdentifier)
+                .collect(Collectors.toList());
     }
 
     private static <T> void resolve(final @NotNull Node<T> p_root, final @NotNull List<Node> p_resolved, final @NotNull Set<Node> p_seen) throws CircularDependencyException {

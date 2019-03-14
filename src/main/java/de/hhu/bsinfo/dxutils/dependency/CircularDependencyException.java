@@ -16,7 +16,7 @@
 
 package de.hhu.bsinfo.dxutils.dependency;
 
-public class CircularDependencyException extends Exception {
+public class CircularDependencyException extends RuntimeException {
 
     public CircularDependencyException() {
     }
