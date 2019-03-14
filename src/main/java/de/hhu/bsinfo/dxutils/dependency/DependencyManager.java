@@ -1,6 +1,4 @@
-package de.hhu.bsinfo.dxutils.module;
-
-import de.hhu.bsinfo.dxutils.dependency.DependencyGraph;
+package de.hhu.bsinfo.dxutils.dependency;
 
 import java.lang.reflect.Field;
 import java.util.*;

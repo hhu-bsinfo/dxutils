@@ -1,4 +1,4 @@
-package de.hhu.bsinfo.dxutils.module;
+package de.hhu.bsinfo.dxutils.dependency;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

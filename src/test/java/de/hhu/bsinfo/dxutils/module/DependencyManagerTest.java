@@ -1,5 +1,7 @@
 package de.hhu.bsinfo.dxutils.module;
 
+import de.hhu.bsinfo.dxutils.dependency.Dependency;
+import de.hhu.bsinfo.dxutils.dependency.DependencyManager;
 import org.junit.Test;
 
 import java.util.List;
