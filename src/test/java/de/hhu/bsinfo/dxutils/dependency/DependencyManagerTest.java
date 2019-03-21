@@ -1,4 +1,4 @@
-package de.hhu.bsinfo.dxutils.module;
+package de.hhu.bsinfo.dxutils.dependency;
 
 import de.hhu.bsinfo.dxutils.dependency.Dependency;
 import de.hhu.bsinfo.dxutils.dependency.DependencyManager;
