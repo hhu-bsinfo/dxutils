@@ -85,7 +85,7 @@ public class DependencyGraphTest {
 
         List<Class> actual = graph.resolve(B.class);
 
-        List<Class> expected = Arrays.asList(C.class, D.class, F.class, E.class, A.class, B.class);
+        List<Class> expected = Arrays.asList(F.class, E.class, C.class, D.class, A.class, B.class);
 
         assertEquals(expected, actual);
     }
