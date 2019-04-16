@@ -104,7 +104,7 @@ public final class UnsafeMemory {
      */
     public static int readBooleans(final long p_ptr, final boolean[] p_array, final int p_arrayOffset, final int p_length) {
         MS_UNSAFE_HANDLER.getUnsafe().copyMemory(null, p_ptr, p_array,
-                UnsafeHandler.getArrayByteOffset() + p_arrayOffset, p_length);
+                UnsafeHandler.getArrayBooleanOffset() + p_arrayOffset, p_length);
 
         return p_length;
     }
@@ -358,7 +358,7 @@ public final class UnsafeMemory {
      * @return Number of written elements
      */
     public static int writeBooleans(final long p_ptr, final boolean[] p_array, final int p_arrayOffset, final int p_length) {
-        MS_UNSAFE_HANDLER.getUnsafe().copyMemory(p_array, UnsafeHandler.getArrayByteOffset() + p_arrayOffset, null,
+        MS_UNSAFE_HANDLER.getUnsafe().copyMemory(p_array, UnsafeHandler.getArrayBooleanOffset() + p_arrayOffset, null,
                 p_ptr, p_length);
 
         return p_length;
