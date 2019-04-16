@@ -90,6 +90,26 @@ public final class UnsafeMemory {
     }
 
     /**
+     * Read data from memory into a boolean array.
+     *
+     * @param p_ptr
+     *         Start position in memory.
+     * @param p_array
+     *         Array to read the data into.
+     * @param p_arrayOffset
+     *         Start offset in array to start writing the booleans to.
+     * @param p_length
+     *         Number of booleans to read from specified start.
+     * @return Number of read elements.
+     */
+    public static int readBooleans(final long p_ptr, final boolean[] p_array, final int p_arrayOffset, final int p_length) {
+        MS_UNSAFE_HANDLER.getUnsafe().copyMemory(null, p_ptr, p_array,
+                UnsafeHandler.getArrayByteOffset() + p_arrayOffset, p_length);
+
+        return p_length;
+    }
+
+    /**
      * Read data from memory into a byte array.
      *
      * @param p_ptr
@@ -237,6 +257,17 @@ public final class UnsafeMemory {
     }
 
     /**
+     * Read a single boolean value.
+     *
+     * @param p_ptr
+     *         Memory position to read from.
+     * @return Boolean read.
+     */
+    public static boolean readBoolean(final long p_ptr) {
+        return MS_UNSAFE_HANDLER.getUnsafe().getByte(p_ptr) == 1 ? true : false;
+    }
+
+    /**
      * Read a single byte value.
      *
      * @param p_ptr
@@ -311,6 +342,26 @@ public final class UnsafeMemory {
      */
     public static double readDouble(final long p_ptr) {
         return MS_UNSAFE_HANDLER.getUnsafe().getDouble(p_ptr);
+    }
+
+    /**
+     * Write an array of booleans to memory.
+     *
+     * @param p_ptr
+     *         Start address to write to.
+     * @param p_array
+     *         Array with data to write.
+     * @param p_arrayOffset
+     *         Offset in array to start reading the data from.
+     * @param p_length
+     *         Number of elements to write.
+     * @return Number of written elements
+     */
+    public static int writeBooleans(final long p_ptr, final boolean[] p_array, final int p_arrayOffset, final int p_length) {
+        MS_UNSAFE_HANDLER.getUnsafe().copyMemory(p_array, UnsafeHandler.getArrayByteOffset() + p_arrayOffset, null,
+                p_ptr, p_length);
+
+        return p_length;
     }
 
     /**
@@ -461,6 +512,18 @@ public final class UnsafeMemory {
         }
 
         return p_length;
+    }
+
+    /**
+     * Write a single boolean value to memory.
+     *
+     * @param p_ptr
+     *         Address to write to.
+     * @param p_value
+     *         Value to write.
+     */
+    public static void writeBoolean(final long p_ptr, final boolean p_value) {
+        MS_UNSAFE_HANDLER.getUnsafe().putByte(p_ptr, (byte)(p_value ? 1 : 0));
     }
 
     /**
