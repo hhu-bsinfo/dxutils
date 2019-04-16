@@ -69,6 +69,15 @@ public final class UnsafeHandler {
     }
 
     /**
+     * Get the offset of the boolean array within the object boolean[]
+     *
+     * @return the boolean array offset
+     */
+    static int getArrayBooleanOffset() {
+        return sun.misc.Unsafe.ARRAY_BOOLEAN_BASE_OFFSET;
+    }
+
+    /**
      * Get the offset of the byte array within the object byte[]
      *
      * @return the byte array offset
