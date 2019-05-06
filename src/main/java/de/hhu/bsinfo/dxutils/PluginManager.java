@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
@@ -82,6 +83,23 @@ public class PluginManager {
      */
     public Class getClassByName(final String p_fullyQualifiedName) throws ClassNotFoundException {
         return Class.forName(p_fullyQualifiedName, true, m_classLoader);
+    }
+
+    /**
+     * Get the application class of the specified plugin (jar archive).
+     *
+     * @param p_pluginPath The jar archive's path.
+     * @return The application class within the plugin (jar archive) or null.
+     */
+    public Class<?> getApplicationClass(final Path p_pluginPath) {
+        try {
+            JarInputStream jarIs = new JarInputStream(new FileInputStream(p_pluginPath.toFile()));
+            final String appClass = jarIs.getManifest().getMainAttributes().getValue("Application-Class");
+            Class<?> clazz = Class.forName(appClass, true, m_classLoader);
+            return clazz;
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
     }
 
     /**
